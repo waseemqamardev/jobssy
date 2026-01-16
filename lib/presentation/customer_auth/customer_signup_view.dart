@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jobssy/presentation/authentication/login_view.dart';
+import 'package:jobssy/presentation/customer_auth/customer_profile_setup_view.dart';
 import '../../../core/global_components/primary_button.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
@@ -135,7 +136,7 @@ class _CustomerSignUpViewState extends State<CustomerSignUpView> {
               PrimaryButton(
                 height: 48.h,
                 onTap: () {
-                  Get.offAll(() => const ProfileSetupView());
+                  Get.to(() => const CustomerProfileSetupView());
                 },
                 childWidget: Text(
                   "Sign Up",
@@ -152,7 +153,7 @@ class _CustomerSignUpViewState extends State<CustomerSignUpView> {
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    Get.offAll(() => const LoginView());
+                    Get.to(() => const LoginView());
                   },
                   child: RichText(
                     text: TextSpan(

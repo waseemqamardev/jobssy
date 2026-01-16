@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jobssy/presentation/customer_bottom_nav/customer_bottomnav.dart';
+import 'package:jobssy/presentation/profile/verification_code_view.dart';
 
 import '../../../core/global_components/primary_button.dart';
 import '../../core/configs/colors/app_colors.dart';
@@ -247,7 +249,9 @@ class _CustomerProfileSetupViewState extends State<CustomerProfileSetupView> {
               _consentCheckbox("I agree to Jobsy’s business posting policies."),
               30.heightSpace,
               PrimaryButton(
-                onTap: () {},
+                onTap: () {
+                  Get.to(VerificationCodeView());
+                },
                 childWidget: Text(
                   "Verify email",
                   style: FontHelper.f16w500MediumStyle

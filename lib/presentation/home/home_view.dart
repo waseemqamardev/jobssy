@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jobssy/presentation/home/job_application_view.dart';
 import 'package:jobssy/presentation/home/search_jobs_view.dart';
+import 'package:jobssy/presentation/notifications/notifications_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/global_components/customfield_component.dart';
@@ -96,7 +97,11 @@ class _HomeViewState extends State<HomeView> {
             ),
           ],
         ),
-        Image.asset(Assets.iconsPnotifications, width: 24.w, height: 24.h),
+        GestureDetector(
+            onTap: (){
+              Get.to(NotificationsView());
+            },
+            child: Image.asset(Assets.iconsPnotifications, width: 24.w, height: 24.h)),
       ],
     );
   }
@@ -435,8 +440,9 @@ class _HomeViewState extends State<HomeView> {
                   value: true,
                   onChanged: (v) {},
                   activeColor: AppColor.white,
-                  activeTrackColor: AppColor.primary,
+                  activeTrackColor: AppColor.border,
                   inactiveTrackColor: AppColor.secondary,
+                  inactiveThumbColor: AppColor.white,
                 ),
               ],
             )
@@ -657,11 +663,10 @@ void _showJobDetailPopup(BuildContext context) {
                   ],
                 ),
                 25.heightSpace,
-                // Apply Button
                 PrimaryButton(
                   height: 48.h,
                   onTap: () {
-                    Get.offAll(() => const JobApplicationView());
+                    Get.to(() => const JobApplicationView());
                   },
                   childWidget: Text(
                     "Apply Now",

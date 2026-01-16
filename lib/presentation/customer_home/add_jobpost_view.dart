@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jobssy/presentation/customer_home/job_post_successful_view.dart';
 
 import '../../../core/global_components/primary_button.dart';
 import '../../core/configs/colors/app_colors.dart';
@@ -35,7 +36,7 @@ class _AddJobPostViewState extends State<AddJobPostView> {
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
-          "Edit Profile",
+          "Add Job Post",
           style: FontHelper.f24w500MediumStyle.copyWith(
             color: AppColor.black,
             fontWeight: FontWeight.w700,
@@ -156,7 +157,9 @@ class _AddJobPostViewState extends State<AddJobPostView> {
                     ),
                     30.heightSpace,
                     PrimaryButton(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(JobPostSuccessfulView());
+                      },
                       childWidget: Text(
                         "Next",
                         style: FontHelper.f16w500MediumStyle

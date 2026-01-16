@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jobssy/presentation/customer_jobs/proposal_view.dart';
+import 'package:jobssy/presentation/customer_jobs/proposals_list_view.dart';
 import 'package:jobssy/presentation/jobs/warehouse_associate_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
@@ -44,14 +45,7 @@ class _CustomerJobsViewState extends State<CustomerJobsView> {
                     ),
                   ),
                 ),
-                Positioned(
-                  right: 0,
-                  child: Image.asset(
-                    Assets.iconsJobsQuestionmark,
-                    width: 24.w,
-                    height: 24.h,
-                  ),
-                ),
+
               ],
             ),
           ],
@@ -71,7 +65,11 @@ class _CustomerJobsViewState extends State<CustomerJobsView> {
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 itemCount: 2,
                 itemBuilder: (context, index) =>
-                    _buildJobPostCard("Barista", "21 days"),
+                    GestureDetector(
+                        onTap: (){
+                          Get.to(() => ProposalsListView());
+                        },
+                        child: _buildJobPostCard("Barista", "21 days")),
 
             ),
           ),
@@ -218,7 +216,7 @@ class _CustomerJobsViewState extends State<CustomerJobsView> {
                   AppColor.primary,
                   AppColor.white,
                       () {
-                        Get.offAll(() =>ProposalView());},
+                        Get.to(() =>ProposalView());},
                 ),
               ),
               12.widthSpace,

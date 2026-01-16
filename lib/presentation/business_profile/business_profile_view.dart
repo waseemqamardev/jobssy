@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jobssy/presentation/authentication/set_new_password_view.dart';
 
 import '../../../core/global_components/primary_button.dart';
 import '../../core/configs/colors/app_colors.dart';
@@ -274,7 +275,9 @@ class _BusinessProfileViewState extends State<BusinessProfileView> {
               _consentCheckbox("I agree to Jobsy’s business posting policies."),
               30.heightSpace,
               PrimaryButton(
-                onTap: () {},
+                onTap: () {
+                  Get.to(SetNewPasswordView());
+                },
                 childWidget: Text(
                   "Save",
                   style: FontHelper.f16w500MediumStyle
@@ -284,6 +287,7 @@ class _BusinessProfileViewState extends State<BusinessProfileView> {
                 borderRadius: 12.r,
                 width: double.infinity,
               ),
+              40.heightSpace,
             ],
           ),
         ),

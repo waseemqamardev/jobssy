@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jobssy/presentation/customer_bottom_nav/customer_bottomnav.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/global_components/primary_button.dart';
 import '../../core/utils/extensions.dart';
+import 'package:get/get.dart';
+
+import 'customer_home_view.dart';
+
 
 class JobPostSuccessfulView extends StatefulWidget {
   const JobPostSuccessfulView({super.key});
@@ -58,6 +63,8 @@ class _JobPostSuccessfulViewState extends State<JobPostSuccessfulView> {
                 PrimaryButton(
                   height: 48.h,
                   onTap: () {
+                    Get.to(CustomerBottomNav());
+
                   },
                   childWidget: Text(
                     "Continue",

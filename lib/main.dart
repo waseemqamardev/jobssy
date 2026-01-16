@@ -12,6 +12,7 @@ import 'package:jobssy/presentation/authentication/signup_view.dart';
 import 'package:jobssy/presentation/business_profile/business_profile_view.dart';
 import 'package:jobssy/presentation/customer_auth/customer_profile_setup_view.dart';
 import 'package:jobssy/presentation/customer_auth/customer_signup_view.dart';
+import 'package:jobssy/presentation/customer_bottom_nav/customer_bottomnav.dart';
 import 'package:jobssy/presentation/customer_home/add_jobpost_view.dart';
 import 'package:jobssy/presentation/customer_home/customer_home_view.dart';
 import 'package:jobssy/presentation/customer_home/recent_employee_view.dart';
@@ -39,6 +40,7 @@ import 'package:jobssy/presentation/profile/kyc_verified_view.dart';
 import 'package:jobssy/presentation/profile/password_reset_success_view.dart';
 import 'package:jobssy/presentation/profile/password_verification_view.dart';
 import 'package:jobssy/presentation/profile/profile_view.dart';
+import 'package:jobssy/presentation/profile/verification_code_view.dart';
 import 'package:jobssy/presentation/profile/verification_email_view.dart';
 import 'package:jobssy/presentation/qr_scan/qr_scan_view.dart';
 import 'package:jobssy/presentation/qr_scan/start_job_view.dart';
@@ -108,7 +110,7 @@ class MyApp extends StatelessWidget {
           ),
           // getPages: AppRoutes.appRoute(),
           // initialRoute: RouteName.bottomNavigationScreen,
-          home: const StartJobView(),
+          home: const SplashView(),
         );
       },
     );

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:jobssy/core/global_components/custom_search_bar.dart';
 import 'package:jobssy/core/global_components/customfield_component.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/utils/extensions.dart';
 import '../../generated/assets.dart';
+import 'invoice_details_view.dart';
 
 class WalletView extends StatelessWidget {
   const WalletView({super.key});
@@ -40,7 +42,7 @@ class WalletView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Divider(
+            const Divider(
               color: AppColor.border,
               thickness: 1,
             ),
@@ -74,7 +76,11 @@ class WalletView extends StatelessWidget {
             Expanded(
               child: ListView.builder(
                 itemCount: 3,
-                itemBuilder: (context, index) => _buildReceiptCard(),
+                itemBuilder: (context, index) => GestureDetector(
+                    onTap: (){
+                      Get.to(() => const InvoiceDetailsView());
+                    },
+                    child: _buildReceiptCard()),
               ),
             ),
           ],

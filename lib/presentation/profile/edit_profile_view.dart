@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jobssy/presentation/profile/kyc_unverified_view.dart';
 
 import '../../../core/global_components/primary_button.dart';
 import '../../core/configs/colors/app_colors.dart';
@@ -254,7 +255,9 @@ class _EditProfileViewState extends State<EditProfileView> {
 
               25.heightSpace,
               PrimaryButton(
-                onTap: () {},
+                onTap: () {
+                  Get.to(KYCUnverifiedView());
+                },
                 childWidget: Text(
                   "Save",
                   style: FontHelper.f16w500MediumStyle

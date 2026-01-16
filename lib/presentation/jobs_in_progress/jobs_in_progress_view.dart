@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jobssy/presentation/jobs_in_progress/job_not_completed_view.dart';
+import 'package:jobssy/presentation/jobs_in_progress/proposal_detail_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/global_components/primary_button.dart';
@@ -17,10 +19,9 @@ class JobsInProgressView extends StatefulWidget {
 }
 
 class _JobsInProgressViewState extends State<JobsInProgressView> {
-  // Mockup states
-  bool isInProgressSelected = true; // Right side (In progress)
-  bool isPostedSelected = true;     // Right side (Posted)
-  bool hasPostedJobs = true;       // Toggle for empty state vs list
+  bool isInProgressSelected = true; 
+  bool isPostedSelected = true;     
+  bool hasPostedJobs = true;     
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +51,6 @@ class _JobsInProgressViewState extends State<JobsInProgressView> {
           children: [
             const Divider(color: AppColor.border, thickness: 1),
             15.heightSpace,
-
-            // First Row: Just Posted | In progress
             _buildToggleTab(
               leftLabel: "Just Posted",
               rightLabel: "In progress",
@@ -60,7 +59,6 @@ class _JobsInProgressViewState extends State<JobsInProgressView> {
             ),
             15.heightSpace,
 
-            // Second Row: Ongoing (2) | Posted (1)
             _buildToggleTab(
               leftLabel: "Ongoing (2)",
               rightLabel: "Posted (1)",
@@ -68,7 +66,6 @@ class _JobsInProgressViewState extends State<JobsInProgressView> {
               onChanged: (val) => setState(() => isPostedSelected = val),
             ),
 
-            // Dropdown visible when "Posted" is selected
             if (isPostedSelected)
               Align(
                 alignment: Alignment.centerRight,
@@ -94,10 +91,13 @@ class _JobsInProgressViewState extends State<JobsInProgressView> {
 
             20.heightSpace,
 
-            // Main Content Area
             Expanded(
               child: (isInProgressSelected && isPostedSelected && hasPostedJobs)
-                  ? _buildJobsList()
+                  ? GestureDetector(
+                  onTap: (){
+                    Get.to(ProposalDetailView());
+                  },
+                  child: _buildJobsList())
                   : _buildEmptyState(),
             ),
           ],

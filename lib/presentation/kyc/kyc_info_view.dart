@@ -62,6 +62,8 @@ class _KYCInfoViewState extends State<KYCInfoView> {
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: AppBar(
+        toolbarHeight: 100.h,
+         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
@@ -92,8 +94,11 @@ class _KYCInfoViewState extends State<KYCInfoView> {
       ),
       body: Column(
         children: [
-          20.heightSpace,
-          _buildStepper(),
+          16.heightSpace,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 19.0),
+            child: _buildStepper(),
+          ),
           Expanded(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -117,7 +122,7 @@ class _KYCInfoViewState extends State<KYCInfoView> {
                             if (activeStep < 5) {
                               setState(() => activeStep++);
                             } else {
-                             Get.offAll(KycSuccessView());
+                             Get.to(KycSuccessView());
                             }
                           },
                           height: 48.h,

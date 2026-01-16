@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jobssy/presentation/authentication/login_view.dart';
+import 'package:jobssy/presentation/home/home_view.dart';
 import '../../../core/global_components/primary_button.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
@@ -50,7 +51,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         elevation: 0,
         actions: [
           TextButton(
-            onPressed: () => Get.offAll(() => const HomeScreen()),
+            onPressed: () => Get.to(() => const HomeView()),
             child: Row(
               children: [
                 Text("Skip",
@@ -145,7 +146,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                     curve: Curves.easeIn,
                   );
                 } else {
-                  Get.offAll(() => const LoginView());
+                  Get.to(() => const LoginView());
                 }
               },
               childWidget: Text(

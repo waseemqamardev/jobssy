@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jobssy/presentation/authentication/login_view.dart';
-import 'package:jobssy/presentation/profile/edit_profile_view.dart';
+import 'package:jobssy/presentation/business_profile/business_profile_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/global_components/primary_button.dart';
 import '../../core/utils/extensions.dart';
 import '../../generated/assets.dart';
 
-class ProfileView extends StatefulWidget {
-  const ProfileView({super.key});
+class CustomerProfileView extends StatefulWidget {
+  const CustomerProfileView({super.key});
 
   @override
-  State<ProfileView> createState() => _ProfileViewState();
+  State<CustomerProfileView> createState() => _CustomerProfileViewState();
 }
 
-class _ProfileViewState extends State<ProfileView> {
+class _CustomerProfileViewState extends State<CustomerProfileView> {
   bool isNotificationEnabled = false;
 
   @override
@@ -60,7 +60,7 @@ class _ProfileViewState extends State<ProfileView> {
             30.heightSpace,
             GestureDetector(
               onTap: (){
-                Get.to(EditProfileView());
+                Get.to(const BusinessProfileView());
               },
               child: Center(
                 child: Stack(
@@ -95,7 +95,7 @@ class _ProfileViewState extends State<ProfileView> {
             ),
             12.heightSpace,
             Text(
-              "Joffery starmer",
+              "AB Traders",
               style: FontHelper.f18BoldStyle.copyWith(
                 color:AppColor.primary,
                 fontWeight: FontWeight.w700,
@@ -200,7 +200,7 @@ class _ProfileViewState extends State<ProfileView> {
               children: [
                 Expanded(
                   child: PrimaryButton(
-                    onTap: () => Get.to(LoginView()),
+                    onTap: () => Get.to(const LoginView()),
                     bgColor: const Color(0xFF4285F4), // Light blue from image_d42dec
                     childWidget: Text("Logout", style: TextStyle(color: Colors.white, fontSize: 16.sp)),
                   ),

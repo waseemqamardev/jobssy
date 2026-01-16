@@ -315,7 +315,7 @@ void _showProposalDetailSheet(BuildContext context) {
               Expanded(
                 child: _actionButton(
                     "Accept", AppColor.primary, AppColor.white, () {
-                      Get.offAll(ProjectOverviewView());
+                      Get.to(ProjectOverviewView());
                 }),
               ),
               12.widthSpace,

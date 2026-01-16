@@ -4,19 +4,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jobssy/presentation/authentication/set_new_password_view.dart';
 import 'package:jobssy/presentation/profile/password_reset_success_view.dart';
+import 'package:jobssy/presentation/profile/verification_code_success_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/global_components/primary_button.dart';
 import '../../core/utils/extensions.dart';
 
-class VerificationEmailView extends StatefulWidget {
-  const VerificationEmailView({super.key});
+class VerificationCodeView extends StatefulWidget {
+  const VerificationCodeView({super.key});
 
   @override
-  State<VerificationEmailView> createState() => _VerificationEmailViewState();
+  State<VerificationCodeView> createState() => _VerificationCodeViewState();
 }
 
-class _VerificationEmailViewState extends State<VerificationEmailView> {
+class _VerificationCodeViewState extends State<VerificationCodeView> {
   final List<TextEditingController> _controllers =
   List.generate(5, (index) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(5, (index) => FocusNode());
@@ -37,20 +38,17 @@ class _VerificationEmailViewState extends State<VerificationEmailView> {
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
         toolbarHeight: 100.h,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          "Verification email",
-          style: FontHelper.f24w500MediumStyle.copyWith(
-            color: AppColor.black,
-            fontWeight: FontWeight.w700,
-            fontSize: 26.sp,
+        leading: Padding(
+          padding: EdgeInsets.only(top: 50.h),
+          child: IconButton(
+            onPressed: () => Get.back(),
+            icon: const Icon(
+              Icons.arrow_back_ios_new,
+              color: AppColor.black,
+            ),
           ),
         ),
       ),
@@ -60,8 +58,12 @@ class _VerificationEmailViewState extends State<VerificationEmailView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Divider(color: AppColor.border, thickness: 1),
-
+                30.heightSpace,
+              Text(
+                "Verification Code",
+                style: FontHelper.f32w500MediumStyle.copyWith(
+                    color: AppColor.black, fontWeight: FontWeight.w700),
+              ),
               15.heightSpace,
               Text(
                 "We sent a reset link to abcde123@gmail.com \nenter 5 digit code that mentioned in the email",
@@ -103,10 +105,10 @@ class _VerificationEmailViewState extends State<VerificationEmailView> {
               PrimaryButton(
                 height: 48.h,
                 onTap: () {
-                 Get.to(const PasswordResetSuccessView());
+                  Get.to(const VerificationCodeSuccessView());
                 },
                 childWidget: Text(
-                  "Proceed to Verify",
+                  "Verify Email",
                   style: FontHelper.f16w500MediumStyle.copyWith(
                       fontWeight: FontWeight.w600, color: AppColor.white),
                 ),

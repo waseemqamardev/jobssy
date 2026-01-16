@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:jobssy/presentation/customer_home/recent_employee_view.dart';
+import 'package:jobssy/presentation/notifications/notifications_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/utils/extensions.dart';
 import '../../generated/assets.dart';
+import 'add_jobpost_view.dart';
 
 class CustomerHomeView extends StatelessWidget {
   const CustomerHomeView({super.key});
@@ -28,8 +32,12 @@ class CustomerHomeView extends StatelessWidget {
                   20.heightSpace,
                   _buildSectionTitle("Recent workers and Ratings"),
                   15.heightSpace,
-                  _buildWorkersList(),
-                  20.heightSpace,
+                  GestureDetector(
+                      onTap: (){
+                        Get.to(RecentEmployeeView());
+                      },
+                      child: _buildWorkersList()),
+                  130.heightSpace,
                 ],
               ),
             ),
@@ -65,12 +73,22 @@ class CustomerHomeView extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Image.asset(
-                    Assets.iconsJobbIcon,
-                    height: 24.h,
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(AddJobPostView());
+
+                    },
+                    child: Image.asset(
+                      Assets.iconsJobbIcon,
+                      height: 24.h,
+                    ),
                   ),
                   15.widthSpace,
-                  Image.asset(Assets.iconsPnotifications, height: 24.h),
+                  GestureDetector(
+                      onTap: (){
+                        Get.to(NotificationsView());
+                      },
+                      child: Image.asset(Assets.iconsPnotifications, height: 24.h)),
                 ],
               )
             ],

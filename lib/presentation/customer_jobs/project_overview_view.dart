@@ -112,7 +112,7 @@ class ProjectOverviewView extends StatelessWidget {
             PrimaryButton(
               height: 48.h,
               onTap: () {
-                Get.offAll(() => const InvoiceDetailsView());
+                Get.to(() => const InvoiceDetailsView());
 
               },
               childWidget: Text(

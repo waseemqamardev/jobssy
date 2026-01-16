@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:jobssy/presentation/customer_bottom_nav/customer_bottomnav.dart';
-import 'package:jobssy/presentation/home/home_view.dart';
-import 'package:jobssy/presentation/home_screen.dart'; // Ensure path is correct
-import 'package:jobssy/presentation/roles/select_role_view.dart';
+import 'package:jobssy/presentation/customer_jobs/customer_jobs_view.dart';
 import '../../core/configs/colors/app_colors.dart';
-import '../../core/configs/font_style.dart'; // Font style import karein
+import '../../core/configs/font_style.dart';
 import '../../core/global_components/primary_button.dart';
 import '../../core/utils/extensions.dart';
-import '../../main.dart'; // Button component
+import 'package:get/get.dart';
 
-class KycSuccessView extends StatefulWidget {
-  const KycSuccessView({super.key});
+
+
+class JobSuccessfullyCompleteView extends StatefulWidget {
+  const JobSuccessfullyCompleteView({super.key});
 
   @override
-  State<KycSuccessView> createState() => _KycSuccessViewState();
+  State<JobSuccessfullyCompleteView> createState() => _JobSuccessfullyCompleteViewState();
 }
 
-class _KycSuccessViewState extends State<KycSuccessView> {
+class _JobSuccessfullyCompleteViewState extends State<JobSuccessfullyCompleteView> {
   @override
   void initState() {
     super.initState();
@@ -43,17 +41,17 @@ class _KycSuccessViewState extends State<KycSuccessView> {
               children: [
                 // Title
                 Text(
-                  "KYC Completed",
+                  "Job Completed",
                   style: FontHelper.f24w500MediumStyle.copyWith(
                     color: Colors.black,
                     fontWeight: FontWeight.w700,
-                    fontSize: 28.sp,
+                    fontSize: 32.sp,
                   ),
                 ),
                 16.heightSpace,
                 // Subtitle
                 Text(
-                  "Thanks for submitting your document we’ll verify it and complete your KYC as soon as possible",
+                  "You marked the job as complete. Payment will be sent to employee shortly",
                   textAlign: TextAlign.center,
                   style: FontHelper.f14w500MediumStyle.copyWith(
                     color: AppColor.tertiary,
@@ -64,10 +62,11 @@ class _KycSuccessViewState extends State<KycSuccessView> {
                 PrimaryButton(
                   height: 48.h,
                   onTap: () {
-                    Get.to(() => const CustomerBottomNav());
+                    Get.to(CustomerJobsView());
+
                   },
                   childWidget: Text(
-                    "Proceed to Home",
+                    "Back to Jobs",
                     style: FontHelper.f16w500MediumStyle.copyWith(
                         fontWeight: FontWeight.w600, color: AppColor.white),
                   ),
@@ -91,12 +90,11 @@ class _KycSuccessViewState extends State<KycSuccessView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Center Tick Icon
             Container(
               width: 100.w,
               height: 100.h,
               decoration: const BoxDecoration(
-                color: Color(0xFF004071),
+                color: AppColor.primary,
                 shape: BoxShape.circle,
               ),
               child: Icon(

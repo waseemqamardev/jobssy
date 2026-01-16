@@ -25,7 +25,7 @@ class _SplashViewState extends State<SplashView> {
 
   void _navigateToHome() async {
     await Future.delayed(const Duration(seconds: 3));
-    Get.offAll(() => const OnBoardingView());
+    Get.to(() => const OnBoardingView());
   }
 
   @override

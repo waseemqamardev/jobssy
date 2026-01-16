@@ -98,7 +98,7 @@ class _JobApplicationViewState extends State<JobApplicationView> {
             PrimaryButton(
               height: 48.h,
               onTap: () {
-                Get.offAll(() => const ApplicationSuccessView());
+                Get.to(() => const ApplicationSuccessView());
               },
               childWidget: Text(
                 "Confirm and Apply",

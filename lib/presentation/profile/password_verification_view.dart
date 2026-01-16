@@ -117,7 +117,7 @@ class _PasswordVerificationViewState extends State<PasswordVerificationView> {
               PrimaryButton(
                 height: 48.h,
                 onTap: () {
-                  Get.offAll(() => const PasswordChangedView());
+                  Get.to(() => const PasswordChangedView());
 
                 },
                 childWidget: Text(

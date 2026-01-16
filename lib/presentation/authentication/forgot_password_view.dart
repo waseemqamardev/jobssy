@@ -38,8 +38,6 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
           ),
         ),
       ),
-
-
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -47,23 +45,18 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               50.heightSpace,
-
               Text(
                 "Forgot Password",
                 style: FontHelper.f32w500MediumStyle.copyWith(
                     color: AppColor.black, fontWeight: FontWeight.w700),
               ),
-
               12.heightSpace,
-
               Text(
                 "Enter your email and password to reset the password",
                 style: FontHelper.f14w500MediumStyle.copyWith(
                     color: AppColor.tertiary, fontWeight: FontWeight.w400),
               ),
-
               30.heightSpace,
-
               CustomFieldComponents(
                 hint: "Email",
                 hintText: "example123@gmail.com",
@@ -72,14 +65,11 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 prefixIconWidget: Icon(Icons.person_outline,
                     color: AppColor.black.withOpacity(0.7), size: 22.sp),
               ),
-
               30.heightSpace,
-
               PrimaryButton(
                 height: 48.h,
                 onTap: () {
-                  Get.offAll(() => const CheckEmailView());
-
+                  Get.to(() => const CheckEmailView());
                 },
                 childWidget: Text(
                   "Reset Password",

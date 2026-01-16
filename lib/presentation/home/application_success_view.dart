@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jobssy/presentation/home/home_view.dart';
 import 'package:jobssy/presentation/home_screen.dart'; // Ensure path is correct
 import 'package:jobssy/presentation/roles/select_role_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart'; // Font style import karein
 import '../../core/global_components/primary_button.dart';
-import '../../core/utils/extensions.dart'; // Button component
+import '../../core/utils/extensions.dart';
+import '../../main.dart'; // Button component
 
 class ApplicationSuccessView extends StatefulWidget {
   const ApplicationSuccessView({super.key});
@@ -44,7 +46,7 @@ class _ApplicationSuccessViewState extends State<ApplicationSuccessView> {
                   style: FontHelper.f24w500MediumStyle.copyWith(
                     color: Colors.black,
                     fontWeight: FontWeight.w700,
-                    fontSize: 32.sp,
+                    fontSize: 24.sp,
                   ),
                 ),
                 16.heightSpace,
@@ -61,6 +63,7 @@ class _ApplicationSuccessViewState extends State<ApplicationSuccessView> {
                 PrimaryButton(
                   height: 48.h,
                   onTap: () {
+                    Get.to(SimpleBottomNav());
                   },
                   childWidget: Text(
                     "Back to Home",

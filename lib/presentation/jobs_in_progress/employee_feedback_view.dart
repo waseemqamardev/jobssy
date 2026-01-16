@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jobssy/presentation/jobs_in_progress/job_successfully_completed_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/global_components/primary_button.dart';
@@ -14,7 +15,6 @@ class EmployeeFeedbackView extends StatefulWidget {
 }
 
 class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
-  // Mock data for tags
   final List<String> tags = [
     "ON-TIME",
     "PROBLEM SOLVER",
@@ -120,7 +120,9 @@ class _EmployeeFeedbackViewState extends State<EmployeeFeedbackView> {
             ),
             120.heightSpace,
             PrimaryButton(
-              onTap: () {},
+              onTap: () {
+                Get.to(JobSuccessfullyCompleteView);
+              },
               height: 48.h,
               width: double.infinity,
               bgColor: AppColor.primary,

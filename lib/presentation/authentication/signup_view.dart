@@ -154,7 +154,7 @@ class _SignUpViewState extends State<SignUpView> {
               PrimaryButton(
                 height: 48.h,
                 onTap: () {
-                  Get.offAll(() => const ProfileSetupView());
+                  Get.to(() => const ProfileSetupView());
                 },
                 childWidget: Text(
                   "Sign Up",
@@ -171,7 +171,7 @@ class _SignUpViewState extends State<SignUpView> {
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    Get.offAll(() => const LoginView());
+                    Get.to(() => const LoginView());
                   },
                   child: RichText(
                     text: TextSpan(

@@ -163,7 +163,7 @@ class _MyJobsViewState extends State<MyJobsView> {
                   AppColor.primary,
                   AppColor.white,
                   () {
-                    Get.offAll(() =>
+                    Get.to(() =>
                         WarehouseAssociateView(isInProgress: isInProgress));
                   },
                 ),

@@ -102,7 +102,7 @@ class _SetNewPasswordViewState extends State<SetNewPasswordView> {
               PrimaryButton(
                 height: 48.h,
                 onTap: () {
-                  Get.offAll(() => const PasswordChangedView());
+                  Get.to(() => const PasswordChangedView());
 
                 },
                 childWidget: Text(
@@ -121,16 +121,4 @@ class _SetNewPasswordViewState extends State<SetNewPasswordView> {
     );
   }
 
-  void _showSuccessDialog() {
-    Get.defaultDialog(
-      title: "Success",
-      middleText: "Your password has been updated successfully!",
-      textConfirm: "Back to Login",
-      confirmTextColor: Colors.white,
-      buttonColor: AppColor.primary,
-      onConfirm: () {
-        Get.until((route) => Get.currentRoute == '/LoginView');
-      },
-    );
-  }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jobssy/presentation/jobs_in_progress/employee_feedback_view.dart';
+import 'package:jobssy/presentation/jobs_in_progress/job_not_completed_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/global_components/primary_button.dart';
@@ -132,7 +134,10 @@ class ProposalDetailView extends StatelessWidget {
             ),
             20.heightSpace,
             PrimaryButton(
-              onTap: () {},
+              onTap: () {
+                Get.to(EmployeeFeedbackView());
+
+              },
               height: 48.h,
               width: double.infinity,
               bgColor: AppColor.primary,
@@ -145,7 +150,9 @@ class ProposalDetailView extends StatelessWidget {
             ),
             7.5.heightSpace,
             PrimaryButton(
-              onTap: () {},
+              onTap: () {
+                Get.to(JobNotCompletedView());
+              },
               height: 48.h,
               width: double.infinity,
               bgColor: AppColor.white,

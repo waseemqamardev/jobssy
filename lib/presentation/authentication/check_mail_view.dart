@@ -78,7 +78,7 @@ class _CheckEmailViewState extends State<CheckEmailView> {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Get.offAll(() => const SetNewPasswordView());
+                      Get.to(() => const SetNewPasswordView());
                     },
                     child: Text(
                       "Send code again",

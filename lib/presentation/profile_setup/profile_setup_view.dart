@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:jobssy/presentation/profile/verification_code_view.dart';
+import 'package:jobssy/presentation/profile/verification_email_view.dart';
 
 import '../../../core/global_components/primary_button.dart';
 import '../../core/configs/colors/app_colors.dart';
@@ -239,7 +241,9 @@ class _ProfileSetupViewState extends State<ProfileSetupView> {
               ),
               25.heightSpace,
               PrimaryButton(
-                onTap: () {},
+                onTap: () {
+                  Get.to(const VerificationCodeView());
+                },
                 childWidget: Text(
                   "Verify email",
                   style: FontHelper.f16w500MediumStyle
