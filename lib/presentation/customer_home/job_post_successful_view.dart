@@ -17,13 +17,38 @@ class JobPostSuccessfulView extends StatefulWidget {
   State<JobPostSuccessfulView> createState() => _JobPostSuccessfulViewState();
 }
 
-class _JobPostSuccessfulViewState extends State<JobPostSuccessfulView> {
+class _JobPostSuccessfulViewState extends State<JobPostSuccessfulView> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      _showSuccessDialog();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.elasticOut),
+    );
+
+    _controller.forward();
+
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          _showSuccessDialog();
+        });
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void _showSuccessDialog() {
@@ -40,7 +65,6 @@ class _JobPostSuccessfulViewState extends State<JobPostSuccessfulView> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Title
                 Text(
                   "Successful",
                   style: FontHelper.f24w500MediumStyle.copyWith(
@@ -50,7 +74,6 @@ class _JobPostSuccessfulViewState extends State<JobPostSuccessfulView> {
                   ),
                 ),
                 16.heightSpace,
-                // Subtitle
                 Text(
                   "Congratulations! Your Job was posted successfully, you can view it in recent posts",
                   textAlign: TextAlign.center,
@@ -63,8 +86,7 @@ class _JobPostSuccessfulViewState extends State<JobPostSuccessfulView> {
                 PrimaryButton(
                   height: 48.h,
                   onTap: () {
-                    Get.to(CustomerBottomNav());
-
+                    Get.to(const CustomerBottomNav());
                   },
                   childWidget: Text(
                     "Continue",
@@ -88,23 +110,21 @@ class _JobPostSuccessfulViewState extends State<JobPostSuccessfulView> {
     return Scaffold(
       backgroundColor: AppColor.white,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 100.w,
-              height: 100.h,
-              decoration: const BoxDecoration(
-                color: AppColor.primary,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.check,
-                color: AppColor.white,
-                size: 50.sp,
-              ),
+        child: ScaleTransition(
+          scale: _animation,
+          child: Container(
+            width: 100.w,
+            height: 100.h,
+            decoration: const BoxDecoration(
+              color: AppColor.primary,
+              shape: BoxShape.circle,
             ),
-          ],
+            child: Icon(
+              Icons.check,
+              color: AppColor.white,
+              size: 50.sp,
+            ),
+          ),
         ),
       ),
     );

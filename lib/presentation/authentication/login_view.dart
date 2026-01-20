@@ -10,6 +10,7 @@ import '../../core/global_components/customfield_component.dart';
 import '../../core/global_components/primary_button.dart';
 import '../../core/utils/extensions.dart';
 import '../../generated/assets.dart';
+import '../roles/select_role_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -173,7 +174,7 @@ class _LoginViewState extends State<LoginView> {
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(const CustomerSignUpView());
+                    Get.to(const SelectRoleView());
                   },
                   child: RichText(
                     text: TextSpan(

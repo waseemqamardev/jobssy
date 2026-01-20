@@ -16,13 +16,43 @@ class PasswordChangedView extends StatefulWidget {
   State<PasswordChangedView> createState() => _PasswordChangedViewState();
 }
 
-class _PasswordChangedViewState extends State<PasswordChangedView> {
+class _PasswordChangedViewState extends State<PasswordChangedView>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      _showSuccessDialog();
+
+    // Animation Controller
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+
+    // Scale Animation
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.elasticOut),
+    );
+
+    // Animation start
+    _controller.forward();
+
+    // Dialog show after animation completes
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          _showSuccessDialog();
+        });
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void _showSuccessDialog() {
@@ -39,7 +69,6 @@ class _PasswordChangedViewState extends State<PasswordChangedView> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Title
                 Text(
                   "Successful",
                   style: FontHelper.f24w500MediumStyle.copyWith(
@@ -49,7 +78,6 @@ class _PasswordChangedViewState extends State<PasswordChangedView> {
                   ),
                 ),
                 16.heightSpace,
-                // Subtitle
                 Text(
                   "Congratulations! Your password has\nbeen changed. Click continue to login",
                   textAlign: TextAlign.center,
@@ -62,7 +90,7 @@ class _PasswordChangedViewState extends State<PasswordChangedView> {
                 PrimaryButton(
                   height: 48.h,
                   onTap: () {
-                    Get.to(() => const SelectRoleView());
+                    Get.to(() => const LoginView());
                   },
                   childWidget: Text(
                     "Continue",
@@ -86,24 +114,21 @@ class _PasswordChangedViewState extends State<PasswordChangedView> {
     return Scaffold(
       backgroundColor: AppColor.white,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Center Tick Icon
-            Container(
-              width: 100.w,
-              height: 100.h,
-              decoration: const BoxDecoration(
-                color: AppColor.primary,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.check,
-                color: AppColor.white,
-                size: 50.sp,
-              ),
+        child: ScaleTransition(
+          scale: _animation,
+          child: Container(
+            width: 100.w,
+            height: 100.h,
+            decoration: const BoxDecoration(
+              color: AppColor.primary,
+              shape: BoxShape.circle,
             ),
-          ],
+            child: Icon(
+              Icons.check,
+              color: AppColor.white,
+              size: 50.sp,
+            ),
+          ),
         ),
       ),
     );

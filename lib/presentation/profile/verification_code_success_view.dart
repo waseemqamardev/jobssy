@@ -15,13 +15,43 @@ class VerificationCodeSuccessView extends StatefulWidget {
   State<VerificationCodeSuccessView> createState() => _VerificationCodeSuccessViewState();
 }
 
-class _VerificationCodeSuccessViewState extends State<VerificationCodeSuccessView> {
+class _VerificationCodeSuccessViewState extends State<VerificationCodeSuccessView>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      _showSuccessDialog();
+
+    // Animation Controller
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+
+    // Scale Animation
+    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.elasticOut),
+    );
+
+    // Start Animation
+    _controller.forward();
+
+    // Show dialog after animation completes
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Future.delayed(const Duration(milliseconds: 300), () {
+          _showSuccessDialog();
+        });
+      }
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void _showSuccessDialog() {
@@ -38,7 +68,6 @@ class _VerificationCodeSuccessViewState extends State<VerificationCodeSuccessVie
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Title
                 Text(
                   "Successful",
                   style: FontHelper.f24w500MediumStyle.copyWith(
@@ -49,9 +78,8 @@ class _VerificationCodeSuccessViewState extends State<VerificationCodeSuccessVie
                   textAlign: TextAlign.center,
                 ),
                 16.heightSpace,
-                // Subtitle
                 Text(
-                  "Congratulations, your email bas been register, click continue KYC verification",
+                  "Congratulations, your email has been registered. Click continue for KYC verification",
                   textAlign: TextAlign.center,
                   style: FontHelper.f14w500MediumStyle.copyWith(
                     color: AppColor.tertiary,
@@ -86,24 +114,21 @@ class _VerificationCodeSuccessViewState extends State<VerificationCodeSuccessVie
     return Scaffold(
       backgroundColor: AppColor.white,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            // Center Tick Icon
-            Container(
-              width: 100.w,
-              height: 100.h,
-              decoration: const BoxDecoration(
-                color: Color(0xFF004071),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.check,
-                color: AppColor.white,
-                size: 50.sp,
-              ),
+        child: ScaleTransition(
+          scale: _animation,
+          child: Container(
+            width: 100.w,
+            height: 100.h,
+            decoration: const BoxDecoration(
+              color: Color(0xFF004071),
+              shape: BoxShape.circle,
             ),
-          ],
+            child: Icon(
+              Icons.check,
+              color: AppColor.white,
+              size: 50.sp,
+            ),
+          ),
         ),
       ),
     );

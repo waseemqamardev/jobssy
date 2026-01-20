@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:jobssy/presentation/roles/select_role_view.dart';
+import 'package:jobssy/presentation/customer_bottom_nav/customer_bottomnav.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/global_components/primary_button.dart';
 import '../../core/utils/extensions.dart';
+import 'package:get/get.dart';
 
-class PasswordResetSuccessView extends StatefulWidget {
-  const PasswordResetSuccessView({super.key});
+
+
+class JobApprovalSuccessfulView extends StatefulWidget {
+  const JobApprovalSuccessfulView({super.key});
 
   @override
-  State<PasswordResetSuccessView> createState() => _PasswordResetSuccessViewState();
+  State<JobApprovalSuccessfulView> createState() => _JobApprovalSuccessfulViewState();
 }
 
-class _PasswordResetSuccessViewState extends State<PasswordResetSuccessView>
-    with SingleTickerProviderStateMixin {
+class _JobApprovalSuccessfulViewState extends State<JobApprovalSuccessfulView> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -64,17 +65,16 @@ class _PasswordResetSuccessViewState extends State<PasswordResetSuccessView>
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Password Reset Successful",
+                  "Payment Completed",
                   style: FontHelper.f24w500MediumStyle.copyWith(
                     color: Colors.black,
                     fontWeight: FontWeight.w700,
-                    fontSize: 28.sp,
+                    fontSize: 32.sp,
                   ),
-                  textAlign: TextAlign.center,
                 ),
                 16.heightSpace,
                 Text(
-                  "Your withdrawl request has been submitted successfully.",
+                  "Your payment was successful, your job will be available in ongoing jobs",
                   textAlign: TextAlign.center,
                   style: FontHelper.f14w500MediumStyle.copyWith(
                     color: AppColor.tertiary,
@@ -84,9 +84,11 @@ class _PasswordResetSuccessViewState extends State<PasswordResetSuccessView>
                 32.heightSpace,
                 PrimaryButton(
                   height: 48.h,
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(const CustomerBottomNav());
+                  },
                   childWidget: Text(
-                    "Back to Profile",
+                    "Proceed to Home",
                     style: FontHelper.f16w500MediumStyle.copyWith(
                         fontWeight: FontWeight.w600, color: AppColor.white),
                   ),
@@ -113,7 +115,7 @@ class _PasswordResetSuccessViewState extends State<PasswordResetSuccessView>
             width: 100.w,
             height: 100.h,
             decoration: const BoxDecoration(
-              color: Color(0xFF004071),
+              color: AppColor.primary,
               shape: BoxShape.circle,
             ),
             child: Icon(
