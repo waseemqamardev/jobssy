@@ -40,14 +40,14 @@ class _SplashViewState extends State<SplashView> {
           children: [
             Image.asset(
               Assets.imagesBox,
-              width: 275.w,
-              height: 60.84.h,
+              width: 86.w,
+              height: 86.h,
               fit: BoxFit.contain,
             ),
-            25.heightSpace,
             Text("Jobssy",
-                style: FontHelper.f18BoldStyle
-                    .copyWith(fontWeight: FontWeight.w500)),
+                style: FontHelper.extraBoldStyle
+
+            ),
 
           ],
         ),

@@ -26,20 +26,26 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              100.heightSpace,
+              44.heightSpace,
               Center(
                 child: Image.asset(
-                  Assets.imagesBluelogo,
-                  width: 187.w,
-                  height: 70.h,
+                  Assets.imagesBox,
+                  width: 46.w,
+                  height: 40.h,
                   fit: BoxFit.contain,
+                ),
+              ),
+              Center(
+                child: Text("Jobssy",
+                    style: FontHelper.extraBoldStyle
+
                 ),
               ),
 
