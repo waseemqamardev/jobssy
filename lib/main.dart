@@ -93,29 +93,71 @@ class MyApp extends StatelessWidget {
       builder: (_, __) {
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'WinkUp App',
+          title: 'Jobssy App',
           theme: ThemeData(
             primaryColor: AppColor.black,
-            scaffoldBackgroundColor: AppColor.black,
             fontFamily: 'Helvetica Now Display',
             iconTheme: const IconThemeData(color: AppColor.black),
             appBarTheme: const AppBarTheme(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
               systemOverlayStyle: SystemUiOverlayStyle(
-                statusBarIconBrightness: Brightness.dark,
-                statusBarColor: AppColor.black,
-                systemNavigationBarColor: AppColor.black,
-                systemNavigationBarIconBrightness: Brightness.dark,
+                statusBarIconBrightness: Brightness.light,
+                statusBarColor: Colors.transparent,
+                systemNavigationBarIconBrightness: Brightness.light,
               ),
             ),
           ),
-          // getPages: AppRoutes.appRoute(),
-          // initialRoute: RouteName.bottomNavigationScreen,
+
+          builder: (context, child) {
+            return Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFFDAF0FF),
+                    Color(0xFFEEF9FF),
+                    Color(0xFFDFE0E2),
+                  ],
+                ),
+              ),
+              child: child,
+            );
+          },
+
           home: const SplashView(),
         );
       },
     );
   }
 }
+
+
+class GradientBackground extends StatelessWidget {
+  final Widget child;
+
+  const GradientBackground({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xFFDAF0FF),
+            Color(0xFFEEF9FF),
+            Color(0xFFDFE0E2),
+          ],
+        ),
+      ),
+      child: child,
+    );
+  }
+}
+
 
 class SimpleBottomNav extends StatefulWidget {
   const SimpleBottomNav({super.key});
@@ -204,7 +246,6 @@ class _SimpleBottomNavState extends State<SimpleBottomNav> {
                   ),
 
                   15.heightSpace,
-                  // Bottom White Line (Sirf active item ke liye)
                   AnimatedContainer(
                     duration: const Duration(milliseconds: 250),
                     width: isActive ? 70.w : 0,
@@ -220,3 +261,7 @@ class _SimpleBottomNavState extends State<SimpleBottomNav> {
     );
   }
 }
+
+
+
+

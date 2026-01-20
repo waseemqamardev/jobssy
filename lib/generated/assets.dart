@@ -49,6 +49,7 @@ class Assets {
   static const String iconsWalletsearch = 'assets/icons/walletsearch.png';
   static const String imagesBg = 'assets/images/bg.png';
   static const String imagesBluelogo = 'assets/images/bluelogo.png';
+  static const String imagesBox = 'assets/images/box.png';
   static const String imagesDialogMap = 'assets/images/dialog_map.png';
   static const String imagesLocOnMap = 'assets/images/loc_on_map.png';
   static const String imagesLogo = 'assets/images/logo.png';

@@ -31,7 +31,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.primary,
+      backgroundColor: Colors.transparent,
       body: SizedBox(
         width: double.infinity,
         child: Column(
@@ -39,20 +39,16 @@ class _SplashViewState extends State<SplashView> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Image.asset(
-              Assets.imagesLogo,
+              Assets.imagesBox,
               width: 275.w,
-              height: 90.h,
+              height: 60.84.h,
               fit: BoxFit.contain,
             ),
             25.heightSpace,
-            Text("Work when you want, where you want.",
+            Text("Jobssy",
                 style: FontHelper.f18BoldStyle
                     .copyWith(fontWeight: FontWeight.w500)),
-            118.heightSpace,
-            const CircularProgressIndicator(
-              color: AppColor.white,
-              strokeWidth: 2,
-            ),
+
           ],
         ),
       ),

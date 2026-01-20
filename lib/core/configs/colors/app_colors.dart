@@ -33,4 +33,8 @@ class AppColor {
 
 
   static const blackText = Color(0XFF191919);
+
+
+
+
  }
