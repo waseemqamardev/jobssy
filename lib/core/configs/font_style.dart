@@ -97,6 +97,7 @@ class FontHelper {
     fontSize: 16,
   );
   static TextStyle f14w500MediumStyle= f16w500MediumStyle.copyWith(fontSize: 14);
+  static TextStyle f13w500MediumStyle= f16w500MediumStyle.copyWith(fontSize: 13);
   static TextStyle f12w500MediumStyle= f16w500MediumStyle.copyWith(fontSize: 12);
   static TextStyle f8w500MediumStyle= f16w500MediumStyle.copyWith(fontSize: 8);
 
