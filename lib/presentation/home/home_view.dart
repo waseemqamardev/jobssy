@@ -1,16 +1,16 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jobssy/presentation/home/job_application_view.dart';
-import 'package:jobssy/presentation/home/search_jobs_view.dart';
-import 'package:jobssy/presentation/notifications/notifications_view.dart';
+import 'package:jobssy/presentation/home/widgets/location_permission_dialog.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/global_components/customfield_component.dart';
 import '../../core/global_components/primary_button.dart';
 import '../../core/utils/extensions.dart';
 import '../../generated/assets.dart';
-import 'widgets/location_permission_dialog.dart';
+import '../notifications/notifications_view.dart';
+import 'search_jobs_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -21,195 +21,170 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   bool isLocationEnabled = false;
-  int selectedViewIndex = 0; // 0 for Map, 1 for List
-  bool showJobPreview = false;
+  bool isMapView = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
+      backgroundColor: AppColor.background,
       body: SafeArea(
         child: Stack(
           children: [
-            Padding(
+            SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  30.heightSpace,
+                  20.heightSpace,
                   _buildHeader(),
-                  25.heightSpace,
+                  20.heightSpace,
                   _buildSearchBar(),
-                  15.heightSpace,
-                  if (!isLocationEnabled) _buildSettingsNotice(context),
-                  Expanded(
-                    child: !isLocationEnabled
-                        ? _buildLocationOffIllustration()
-                        : (selectedViewIndex == 0
-                            ? _buildMapView()
-                            : _buildJobsListView()),
-                  ),
+                  24.heightSpace,
+
+                  if (isMapView && isLocationEnabled) ...[
+                    _buildMapView(),
+                  ] else ...[
+                    Text("Quick Access",
+                        style: FontHelper.f14w500MediumStyle.copyWith(
+                            color: AppColor.black,
+                            fontWeight: FontWeight.bold)),
+                    10.heightSpace,
+                    _buildQuickAccess(),
+                    24.heightSpace,
+                    Text("My Actions",
+                        style: FontHelper.f14w500MediumStyle.copyWith(
+                            color: AppColor.black,
+                            fontWeight: FontWeight.bold)),
+                    15.heightSpace,
+                    _buildMyActions(),
+                    24.heightSpace,
+
+                    if (!isLocationEnabled)
+                      _buildEnableLocationPrompt()
+                    else
+                      _buildListViewContent(),
+                  ],
+                  80.heightSpace,
                 ],
               ),
             ),
-            if (isLocationEnabled) _buildToggleButtons(),
-            if (selectedViewIndex == 0 && showJobPreview)
-              _buildJobPreviewCard(),
-
+            // Floating Toggle Button
+            if (isLocationEnabled) _buildViewToggleButton(),
           ],
         ),
       ),
     );
   }
 
+  // --- Header ---
   Widget _buildHeader() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        ClipRRect(
+          borderRadius: BorderRadius.circular(10.r),
+          child: Image.asset(
+            Assets.imagesHomeprofile,
+            height: 45.h,
+            width: 45.w,
+            fit: BoxFit.cover,
+          ),
+        ),
+        12.widthSpace,
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Good Morning",
-                style: FontHelper.f16w500MediumStyle.copyWith(
-                    color: AppColor.primary, fontWeight: FontWeight.w400)),
+            Text("Hi, Martin.",
+                style: FontHelper.f16BoldStyle.copyWith(color: AppColor.black)),
+            2.heightSpace,
             Row(
               children: [
-                Text("Ulrich Neilson",
-                    style: FontHelper.f24w500MediumStyle.copyWith(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 28.sp,
-                        color: AppColor.primary)),
-                5.widthSpace,
-                Image.asset(Assets.iconsVerificationBadget,
-                    width: 16.w, height: 16.h),
-              ],
-            ),
-            5.heightSpace,
-            Row(
-              children: [
-                Image.asset(Assets.iconsJobsLocation,
-                    width: 18.w, height: 18.h),
-                5.widthSpace,
-                Text("Central park, DHA 2, Islamabad",
-                    style: FontHelper.f14w400Regular
-                        .copyWith(color: AppColor.primary)),
+                Image.asset(Assets.iconsHomelocation,
+                    height: 18.h, width: 14.w),
+                4.widthSpace,
+                Text("Downtown Dubai, UAE ",
+                    style: TextStyle(fontSize: 11.sp, color: Colors.grey)),
+                GestureDetector(
+                  onTap: () {},
+                  child: Text("Change",
+                      style: TextStyle(
+                          fontSize: 11.sp,
+                          color: AppColor.primary,
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.bold)),
+                ),
               ],
             ),
           ],
         ),
+        const Spacer(),
         GestureDetector(
-            onTap: (){
-              Get.to(NotificationsView());
-            },
-            child: Image.asset(Assets.iconsPnotifications, width: 24.w, height: 24.h)),
+          onTap: () => Get.to(() => const NotificationsView()),
+          child: Container(
+            height: 48.h,
+            width: 48.w,
+            decoration: BoxDecoration(
+              color: AppColor.white,
+              borderRadius: BorderRadius.circular(12.r),
+              border: Border.all(color: AppColor.border),
+            ),
+            child: Center(
+                child: Image.asset(Assets.iconsNotificationnew,
+                    height: 22.h, width: 22.w)),
+          ),
+        ),
       ],
     );
   }
 
+  // --- Search Bar ---
   Widget _buildSearchBar() {
     return Row(
       children: [
         Expanded(
-          child: GestureDetector(
+          child: CustomFieldComponents(
+            borderColor: AppColor.border,
+            controller: TextEditingController(),
+            hintText: "Search for a job",
+            height: 48.h,
+            prefixIconWidget:
+                Image.asset(Assets.iconsHomesearch, height: 20.h, width: 20.w),
             onTap: () => Get.to(() => const SearchJobsView()),
-            child: AbsorbPointer(
-              child: CustomFieldComponents(
-                suffixIconWidget:
-                    const Icon(Icons.search, color: AppColor.primary),
-                controller: TextEditingController(),
-                hintText: "Search here",
-                hintStyle: FontHelper.f12w500MediumStyle.copyWith(
-                    color: AppColor.tertiary, fontWeight: FontWeight.w200),
-                height: 45.h,
-              ),
-            ),
           ),
         ),
-        15.widthSpace,
+        12.widthSpace,
         GestureDetector(
-          onTap: () => _showFilterBottomSheet(context),
+          onTap: () {
+            _showFilterBottomSheet(context);
+          },
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 8.w),
-            width: 45.w,
-            height: 45.h,
+            height: 48.h,
+            width: 48.w,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.r),
+              color: AppColor.white,
+              borderRadius: BorderRadius.circular(12.r),
               border: Border.all(color: AppColor.border),
             ),
-            child: Image.asset(Assets.iconsFilter, fit: BoxFit.contain),
+            child: Center(
+                child:
+                    Image.asset(Assets.iconsFilter, height: 22.h, width: 22.w)),
           ),
-        )
+        ),
       ],
     );
   }
 
-  Widget _buildSettingsNotice(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 12.h),
-      decoration: BoxDecoration(
-          color: AppColor.primary, borderRadius: BorderRadius.circular(10.r)),
-      child: Row(
-        children: [
-          Expanded(
-            child: Text(
-              "Lookout requires location access to enable map. Please enable location services in your system settings to continue",
-              style: FontHelper.f12w500MediumStyle.copyWith(
-                  color: AppColor.white,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 9.sp),
-            ),
-          ),
-          15.widthSpace,
-          GestureDetector(
-            onTap: () async {
-              final result = await showDialog(
-                context: context,
-                builder: (_) => const LocationPermissionDialog(),
-              );
-
-              setState(() {
-                isLocationEnabled = true;
-              });
-            },
-            child: Text("Settings",
-                style: FontHelper.f12w500MediumStyle.copyWith(
-                    color: AppColor.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 10.sp)),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLocationOffIllustration() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(Assets.iconsLocMap, width: 120.w, height: 120.h),
-          20.heightSpace,
-          Text("Your Location is off",
-              style: FontHelper.f16w500MediumStyle
-                  .copyWith(color: AppColor.black)),
-          8.heightSpace,
-          Text("Enable location services to get started",
-              style: FontHelper.f12w500MediumStyle.copyWith(
-                  color: AppColor.black, fontWeight: FontWeight.w400)),
-        ],
-      ),
-    );
-  }
-
+  // --- Map View (Directly after Search) ---
   Widget _buildMapView() {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          showJobPreview = true;
-        });
+        showDialog(
+          context: context,
+          builder: (context) => const LocationPermissionDialog(),
+        );
       },
       child: Container(
-        height: 552.h,
+        height: 550.h, // Adjusted height for map-only view
+        width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20.r),
           image: const DecorationImage(
@@ -217,484 +192,384 @@ class _HomeViewState extends State<HomeView> {
             fit: BoxFit.cover,
           ),
         ),
+        child: Stack(
+          children: [
+            Center(
+              child:
+                  Icon(Icons.location_on, color: AppColor.primary, size: 40.sp),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildJobsListView() {
+  // --- Toggle Button ---
+  Widget _buildViewToggleButton() {
+    return Positioned(
+      bottom: 20.h,
+      left: 0,
+      right: 0,
+      child: Center(
+        child: Container(
+          padding: EdgeInsets.all(4.r),
+          decoration: BoxDecoration(
+            color: AppColor.darkBlueText, // 🔹 Background Dark kar diya
+            borderRadius: BorderRadius.circular(30.r),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _toggleItem(
+                  "List",
+                  !isMapView
+                      ? Assets.iconsListselected
+                      : Assets.iconsListunselected,
+                  !isMapView),
+              _toggleItem(
+                  "Map",
+                  isMapView
+                      ? Assets.iconsMapselected
+                      : Assets.iconsMapunselected,
+                  isMapView),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _toggleItem(String label, String icon, bool active) {
+    return GestureDetector(
+      onTap: () => setState(() => isMapView = label == "Map"),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 10.h),
+        decoration: BoxDecoration(
+          color: active ? AppColor.primary : Colors.transparent,
+          borderRadius: BorderRadius.circular(25.r),
+        ),
+        child: Row(
+          children: [
+            Text(label,
+                style: TextStyle(
+                    color: AppColor.white,
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w600)),
+            8.widthSpace,
+            Image.asset(icon, width: 20.w, height: 20.h),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEnableLocationPrompt() {
+    return Center(
+      child: Column(
+        children: [
+          40.heightSpace,
+          Text("Enable location services to view nearby jobs",
+              style: TextStyle(color: Colors.grey, fontSize: 13.sp)),
+          20.heightSpace,
+          PrimaryButton(
+            height: 35.h,
+            width: 131.w,
+            onTap: () => setState(() => isLocationEnabled = true),
+            childWidget: Text(
+              "Enable location",
+              style: FontHelper.f14w500MediumStyle
+                  .copyWith(fontWeight: FontWeight.w700, color: AppColor.white),
+            ),
+            bgColor: AppColor.primary,
+            borderRadius: 11.85.r,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildListViewContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Nearby Jobs (3)",
-            style: FontHelper.f16w500MediumStyle
-                .copyWith(color: AppColor.black, fontWeight: FontWeight.w700)),
-        7.heightSpace,
-        Expanded(
-          child: ListView.builder(
-            itemCount: 3,
-            itemBuilder: (context, index) => _buildJobItem(),
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Suggested Nearby Jobs",
+                style: FontHelper.f14w500MediumStyle
+                    .copyWith(fontWeight: FontWeight.bold)),
+            Text("View All >",
+                style: TextStyle(color: AppColor.primary, fontSize: 12.sp)),
+          ],
         ),
+        15.heightSpace,
+        _buildJobItem(),
+        _buildJobItem(),
       ],
+    );
+  }
+
+  Widget _buildQuickAccess() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _quickAccessItem("Find Jobs", Assets.iconsFindjobs),
+        _quickAccessItem("Categories", Assets.iconsCategories),
+        _quickAccessItem("Earnings", Assets.iconsEarnings),
+        _quickAccessItem("Saved Jobs", Assets.iconsSavedjobs),
+      ],
+    );
+  }
+
+  Widget _quickAccessItem(String title, String icon) {
+    return Column(
+      children: [
+        Container(
+          height: 60.h,
+          width: 60.w,
+          decoration: BoxDecoration(
+              border: Border.all(color: AppColor.border),
+              color: AppColor.white,
+              borderRadius: BorderRadius.circular(15.r)),
+          child: Center(child: Image.asset(icon, width: 32.w, height: 32.h)),
+        ),
+        8.heightSpace,
+        Text(title,
+            style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w500)),
+      ],
+    );
+  }
+
+  Widget _buildMyActions() {
+    return Row(
+      children: [
+        _actionCard("2", "Active Jobs", Assets.iconsActivejobs),
+        15.widthSpace,
+        _actionCard("18", "Applied Jobs", Assets.iconsAppliedjobs),
+      ],
+    );
+  }
+
+  Widget _actionCard(String count, String title, String icon) {
+    return Expanded(
+      child: Container(
+        padding: EdgeInsets.all(15.w),
+        decoration: BoxDecoration(
+            color: AppColor.white,
+            border: Border.all(color: AppColor.border),
+            borderRadius: BorderRadius.circular(15.r)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(count,
+                    style: TextStyle(
+                        fontSize: 24.sp, fontWeight: FontWeight.bold)),
+                Image.asset(icon, width: 22.w),
+              ],
+            ),
+            5.heightSpace,
+            Text(title, style: TextStyle(color: Colors.grey, fontSize: 12.sp)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showFilterBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: AppColor.background,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(25.r)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30.w),
+          // 🔹 SafeArea ya Container use karein background color confirm karne ke liye
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              30.heightSpace,
+              Text("Select Filters",
+                  style: FontHelper.f16BoldStyle.copyWith(
+                      color: AppColor.black, fontWeight: FontWeight.w600)),
+              Text("Please select the filters as per your preferences.",
+                  style: FontHelper.f13w400Regular
+                      .copyWith(color: AppColor.tertiary)),
+              12.heightSpace,
+              Divider(color: AppColor.tertiary.withOpacity(0.5)),
+              12.heightSpace,
+
+              // --- Job Type ---
+              Text("Job Type",
+                  style: FontHelper.f14w400Regular
+                      .copyWith(color: AppColor.black)),
+              7.heightSpace,
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 15.w),
+                decoration: BoxDecoration(
+                  color: AppColor.white, // Dropdown bg white
+                  borderRadius: BorderRadius.circular(10.r),
+                  border: Border.all(color: AppColor.border),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    isExpanded: true,
+                    value: "All",
+                    dropdownColor: AppColor.white,
+                    items: ["All", "Barista", "Cleaner", "Cashier"]
+                        .map((String value) {
+                      return DropdownMenuItem<String>(
+                          value: value, child: Text(value));
+                    }).toList(),
+                    onChanged: (_) {},
+                  ),
+                ),
+              ),
+
+              12.heightSpace,
+              Text("Distance",
+                  style: FontHelper.f14w400Regular
+                      .copyWith(color: AppColor.black)),
+              Slider(
+                  value: 0.4, onChanged: (v) {}, activeColor: AppColor.primary),
+
+              Text("Pay Range",
+                  style: FontHelper.f14w400Regular
+                      .copyWith(color: AppColor.black)),
+              RangeSlider(
+                values: const RangeValues(20, 80),
+                min: 0,
+                max: 100,
+                onChanged: (v) {},
+                activeColor: AppColor.primary,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("\$5/hr",
+                      style: FontHelper.f14w400Regular
+                          .copyWith(color: AppColor.black)),
+                  Text("\$100/hr",
+                      style: FontHelper.f14w400Regular
+                          .copyWith(color: AppColor.black))
+                ],
+              ),
+
+              30.heightSpace,
+
+              Row(
+                children: [
+                  Expanded(
+                    child: PrimaryButton(
+                      onTap: () {},
+                      width: double.infinity,
+                      height: 44.h,
+                      bgColor: Colors.white,
+                      borderRadius: 10.r,
+                      childWidget: Text(
+                        "Reset",
+                        style: FontHelper.f15w600SemiBold
+                            .copyWith(color: AppColor.tertiary),
+                      ),
+                    ),
+                  ),
+                  12.widthSpace,
+                  Expanded(
+                    child: PrimaryButton(
+                      onTap: () {},
+                      width: double.infinity,
+                      height: 44.h,
+                      bgColor: AppColor.primary,
+                      borderRadius: 10.r,
+                      childWidget: Text(
+                        "Apply Filters",
+                        style: FontHelper.f15w600SemiBold
+                            .copyWith(color: AppColor.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              20.heightSpace,
+            ],
+          ),
+        );
+      },
     );
   }
 
   Widget _buildJobItem() {
     return Container(
-      // height: 110.h,
-      margin: EdgeInsets.only(bottom: 15.h),
+      margin: EdgeInsets.only(bottom: 12.h),
       padding: EdgeInsets.all(15.w),
       decoration: BoxDecoration(
-        border: Border.all(color: AppColor.border),
-        borderRadius: BorderRadius.circular(10.r),
-      ),
+          color: AppColor.white,
+          borderRadius: BorderRadius.circular(15.r),
+          border: Border.all(color: AppColor.border)),
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Barista",
-                  style: FontHelper.f18BoldStyle.copyWith(
-                      fontWeight: FontWeight.w600, color: AppColor.black)),
-              Container(
-                  decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(7.5.r),
-                  ),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
-                  child: Text("Today",
-                      style: FontHelper.f12w500MediumStyle.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: const Color(0xff34A853)))),
-            ],
-          ),
-          4.heightSpace,
-          Row(
-            children: [
-              Text("Blue Bottle Coffee",
-                  style: FontHelper.f14w400Regular
-                      .copyWith(color: AppColor.tertiary)),
-              const Spacer(),
-              Image.asset(
-                Assets.iconsJobsLocation,
-                width: 15.w,
-                height: 15.h,
-              ),
-              Text(" 0.8 mi",
-                  style: FontHelper.f14w400Regular
-                      .copyWith(color: AppColor.tertiary))
-            ],
-          ),
-          10.heightSpace,
-          Row(
-            children: [
-              Image.asset(
-                Assets.iconsDollar,
-                width: 15.w,
-                height: 15.h,
-              ),
-              5.widthSpace,
-              Text("\$18/hour",
-                  style: FontHelper.f14w400Regular
-                      .copyWith(color: AppColor.tertiary)),
-              const Spacer(),
-              Image.asset(
-                Assets.iconsJobsTime,
-                width: 15.w,
-                height: 15.h,
-              ),
-              Text(" 7:00 AM - 3:00 PM",
-                  style: FontHelper.f14w400Regular
-                      .copyWith(color: AppColor.tertiary))
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildToggleButtons() {
-    return Positioned(
-      bottom: 30.h,
-      right: 20.w,
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppColor.primary,
-          borderRadius: BorderRadius.circular(5.r),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            GestureDetector(
-              onTap: () {
-                setState(() => selectedViewIndex = 1);
-              },
-              child: Container(
-                width: 46.w,
-                height: 46.h,
-                decoration: BoxDecoration(
-                  color: selectedViewIndex == 1
-                      ? AppColor.primary
-                      : AppColor.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(5.r),
-                    bottomLeft: Radius.circular(5.r),
-                  ),
-                ),
-                child: Center(
-                  child: Image.asset(
-                    Assets.iconsJobsList,
-                    width: 24.w,
-                    height: 24.h,
-                    color: selectedViewIndex == 1
-                        ? AppColor.white
-                        : AppColor.primary,
-                  ),
-                ),
-              ),
-            ),
-
-            // 🔹 Map Button (Right)
-            GestureDetector(
-              onTap: () {
-                setState(() => selectedViewIndex = 0);
-              },
-              child: Container(
-                width: 46.w,
-                height: 46.h,
-                decoration: BoxDecoration(
-                  color: selectedViewIndex == 0
-                      ? AppColor.primary
-                      : AppColor.white,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(5.r),
-                    bottomRight: Radius.circular(5.r),
-                  ),
-                ),
-                child: Center(
-                  child: Image.asset(
-                    Assets.iconsMapIcon,
-                    width: 24.w,
-                    height: 24.h,
-                    color: selectedViewIndex == 0
-                        ? AppColor.white
-                        : AppColor.primary,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildJobPreviewCard() {
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      right: 0,
-      child: Container(
-        padding: EdgeInsets.fromLTRB(20.w, 20.h, 20.w, 30.h),
-        decoration: const BoxDecoration(
-          color: AppColor.primary,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                 Icon(Icons.location_on, color: AppColor.white, size: 22.sp),
-                7.widthSpace,
-                Text(
-                  "Vital Health Company Limited",
-                  style: FontHelper.f16BoldStyle.copyWith(color: AppColor.white,fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
-            26.heightSpace,
-            GestureDetector(
-              onTap: () => _showJobDetailPopup(context),
-              child: Text(
-                "View Details",
-                style: FontHelper.f14w400Regular.copyWith(
-                  color: AppColor.secondary,
-                  decoration: TextDecoration.underline,
-                  fontWeight: FontWeight.w700
-                ),
-              ),
-            ),
-            20.heightSpace,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Generate Custom Alerts For This Area",
-                  style: FontHelper.f14w400Regular.copyWith(
-                      color: AppColor.secondary,
-                      fontWeight: FontWeight.w700
-                  ),                ),
-                Switch(
-                  value: true,
-                  onChanged: (v) {},
-                  activeColor: AppColor.white,
-                  activeTrackColor: AppColor.border,
-                  inactiveTrackColor: AppColor.secondary,
-                  inactiveThumbColor: AppColor.white,
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-}
-
-void _showFilterBottomSheet(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(25.r)),
-    ),
-    builder: (context) {
-      return Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 30.w,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            30.heightSpace,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const SizedBox(width: 24),
-                Text("Filter",
-                    style: FontHelper.f24w500MediumStyle.copyWith(
-                        color: AppColor.black, fontWeight: FontWeight.w700)),
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: const Icon(
-                    Icons.close,
-                    color: AppColor.primary,
-                  ),
-                ),
-              ],
-            ),
-            30.heightSpace,
-
-            Text("Job Type",
-                style: FontHelper.f20w500MediumStyle.copyWith(
-                    color: AppColor.black, fontWeight: FontWeight.w700)),
-            15.heightSpace,
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 15.w),
-              decoration: BoxDecoration(
+              ClipRRect(
                 borderRadius: BorderRadius.circular(10.r),
-                border: Border.all(color: AppColor.border),
+                child: Image.asset(Assets.imagesOnboard2,
+                    height: 45.h, width: 45.w, fit: BoxFit.cover),
               ),
-              child: DropdownButtonHideUnderline(
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  value: "All",
-                  items: ["All", "Barista", "Cleaner", "Cashier"]
-                      .map((String value) {
-                    return DropdownMenuItem<String>(
-                        value: value, child: Text(value));
-                  }).toList(),
-                  onChanged: (_) {},
-                ),
-              ),
-            ),
-            20.heightSpace,
-
-            Text("Distance",
-                style: FontHelper.f20w500MediumStyle.copyWith(
-                    color: AppColor.black, fontWeight: FontWeight.w700)),
-            Slider(
-                value: 0.4, onChanged: (v) {}, activeColor: AppColor.primary),
-
-            Text("Pay Range",
-                style: FontHelper.f20w500MediumStyle.copyWith(
-                    color: AppColor.black, fontWeight: FontWeight.w700)),
-            RangeSlider(
-              values: const RangeValues(20, 80),
-              min: 0,
-              max: 100,
-              onChanged: (v) {},
-              activeColor: AppColor.primary,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("\$5/hr",
-                    style: FontHelper.f14w400Regular.copyWith(
-                      color: AppColor.black,
-                    )),
-                Text("\$100/hr",
-                    style: FontHelper.f14w400Regular.copyWith(
-                      color: AppColor.black,
-                    ))
-              ],
-            ),
-            15.heightSpace,
-            Text("Timing",
-                style: FontHelper.f20w500MediumStyle.copyWith(
-                    color: AppColor.black, fontWeight: FontWeight.w700)),
-            15.heightSpace,
-            _buildFilterCheckbox("Full Time", true),
-            _buildFilterCheckbox("Part Time", false),
-            _buildFilterCheckbox("Project based", false),
-
-            30.heightSpace,
-            PrimaryButton(
-              height: 48.h,
-              onTap: () {
-                Navigator.pop(context);
-                _showJobDetailPopup(context);
-              },
-              childWidget: Text(
-                "Apply",
-                style: FontHelper.f15w500MediumStyle.copyWith(
-                    fontWeight: FontWeight.w600, color: AppColor.white),
-              ),
-              bgColor: AppColor.primary,
-              borderRadius: 11.85.r,
-              width: double.infinity,
-            ),
-            20.heightSpace,
-          ],
-        ),
-      );
-    },
-  );
-}
-
-Widget _buildFilterCheckbox(String title, bool val) {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Text(title,
-          style: FontHelper.f14w400Regular.copyWith(color: AppColor.tertiary)),
-      Checkbox(value: val, onChanged: (v) {}, activeColor: AppColor.primary),
-    ],
-  );
-}
-
-
-void _showJobDetailPopup(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (context) => Dialog(
-      backgroundColor: AppColor.white,
-
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(15.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text("U-Haul movers",
-                        style: FontHelper.f24w500MediumStyle.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: AppColor.primary)),
-                    5.widthSpace,
-                    Image.asset(Assets.iconsVerificationBadget,
-                        width: 16.w, height: 16.h),
-                  ],
-                ),
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: const Icon(Icons.close,color: AppColor.primary,),
-                ),
-              ],
-            ),
-          ),
-
-          Image.asset(Assets.imagesTruck, fit: BoxFit.cover, height: 250.h, width: double.infinity),
-          10.heightSpace,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(5, (index) => Container(
-              margin: const EdgeInsets.symmetric(horizontal: 2),
-              width: index == 0 ? 10 : 6,
-              height: 6,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: index == 0 ? AppColor.primary : Colors.blue.withOpacity(0.3),
-              ),
-            )),
-          ),
-
-          // Job Info Table
-          Padding(
-            padding: EdgeInsets.all(20.w),
-            child: Column(
-              children: [
-                _buildPopupRow("Role", "Designer"),
-                _buildPopupRow("pay", "\$60"),
-                _buildPopupRow("Time", "Full Time"),
-                _buildPopupRow("Business", "Mevrick's Residence"),
-                _buildPopupRow("Distance", "440 KM"),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Ratings", style: FontHelper.f16w500MediumStyle.copyWith(color: AppColor.black,fontWeight: FontWeight.w400)),
-                    const Row(
-                      children: [
-                        Icon(Icons.star, color: Colors.black, size: 14),
-                        Icon(Icons.star, color: Colors.black, size: 14),
-                        Icon(Icons.star_border, size: 14),
-                        Icon(Icons.star_border, size: 14),
-                        Icon(Icons.star_border, size: 14),
-                      ],
-                    )
-                  ],
-                ),
-                25.heightSpace,
-                PrimaryButton(
-                  height: 48.h,
-                  onTap: () {
-                    Get.to(() => const JobApplicationView());
-                  },
-                  childWidget: Text(
-                    "Apply Now",
-                    style: FontHelper.f15w500MediumStyle.copyWith(
-                        fontWeight: FontWeight.w600, color: AppColor.white),
+              12.widthSpace,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Electrical Engineer", style: FontHelper.f16BoldStyle),
+                  Row(
+                    children: [
+                      Text("Coffee, Dubai  .",
+                          style: FontHelper.f12w500MediumStyle
+                              .copyWith(color: AppColor.tertiary)),
+                      10.widthSpace,
+                      Image.asset(Assets.iconsJobcardmap,
+                          height: 16.h, width: 16.w, fit: BoxFit.cover),
+                      3.widthSpace,
+                      Text(" 0.8 mi",
+                          style: FontHelper.f12w500MediumStyle
+                              .copyWith(color: AppColor.tertiary)),
+                    ],
                   ),
-                  bgColor: AppColor.primary,
-                  borderRadius: 11.85.r,
-                  width: double.infinity,
-                ),
-              ],
-            ),
+                ],
+              ),
+              const Spacer(),
+              const Icon(Icons.favorite, color: Colors.red, size: 20),
+            ],
+          ),
+          15.heightSpace,
+          Row(
+            children: [
+              Image.asset(Assets.iconsDollar,
+                  width: 15.w, height: 15.h, color: AppColor.primary),
+              4.widthSpace,
+              Text("25/hour",
+                  style: FontHelper.f12w500MediumStyle
+                      .copyWith(color: AppColor.tertiary)),
+              10.widthSpace,
+              Image.asset(Assets.iconsBlueCalender, width: 15.w, height: 15.h),
+              Text(" 18 Dec",
+                  style: FontHelper.f12w500MediumStyle
+                      .copyWith(color: AppColor.tertiary)),
+              10.widthSpace,
+              Image.asset(Assets.iconsJobsTime,
+                  width: 15.w, height: 15.h, color: AppColor.primary),
+              Text(" 7:00 AM - 3:00 PM",
+                  style: FontHelper.f12w500MediumStyle
+                      .copyWith(color: AppColor.tertiary))
+            ],
           ),
         ],
       ),
-    ),
-  );
-}
-
-Widget _buildPopupRow(String label, String value) {
-  return Padding(
-    padding: EdgeInsets.only(bottom: 7.h),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(label, style: FontHelper.f16w500MediumStyle.copyWith(color: AppColor.black,fontWeight: FontWeight.w400)),
-        Text(value, style: FontHelper.f14w400Regular.copyWith(color: AppColor.black)),
-      ],
-    ),
-  );
+    );
+  }
 }

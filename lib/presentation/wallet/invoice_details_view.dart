@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/utils/extensions.dart';
+import '../../generated/assets.dart';
 
 class InvoiceDetailsView extends StatelessWidget {
   const InvoiceDetailsView({super.key});
@@ -10,86 +11,90 @@ class InvoiceDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        toolbarHeight: 100.h,
-        elevation: 0,
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black, size: 20),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          "Invoice Details",
-          style: FontHelper.f24w500MediumStyle.copyWith(
-            color: AppColor.black,
-            fontWeight: FontWeight.w700,
-            fontSize: 26.sp,
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 24.w),
+      backgroundColor: AppColor.background,
+      body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Divider(
-              color: AppColor.border,
-              thickness: 1,
-            ),
             20.heightSpace,
-
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 30.h),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20.r),
-                border: Border.all(color: Colors.grey.shade200),
-              ),
-              child: Column(
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  _buildCircleButton(
+                      Icons.arrow_back_ios_new, () => Navigator.pop(context)),
                   Text(
-                    "Total Amount",
-                    style:FontHelper.f16BoldStyle.copyWith(
-                        color: AppColor.primary, fontWeight: FontWeight.w700),
+                    "Invoice Details",
+                    style: FontHelper.f16BoldStyle.copyWith(
+                      color: AppColor.dark,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                  20.heightSpace,
-                  Text(
-                    "€1,800",
-                    style:FontHelper.f24w500MediumStyle.copyWith(
-                      fontSize: 27.sp,
-                        color: AppColor.black, fontWeight: FontWeight.w700),
-                  ),
+                  _buildCircleButton(null, () {}, isDownload: true),
                 ],
               ),
             ),
-            30.heightSpace,
-
-            _buildDetailRow("Unique Invoice Number:", "12345678"),
-            12.heightSpace,
-            _buildDetailRow("VAT Number:", "1234 5678 9999"),
-            25.heightSpace,
-
-            _buildDetailRow("Client:", "John F kennedy"),
-            12.heightSpace,
-            _buildDetailRow("Email:", "john@gmail.com"),
-            20.heightSpace,
-
-            Text(
-              "Transfer to your Easypaisa wallet and never do it again because you are beinmg tracked for the first and the laast time ,..but who know what gonna happen but you can still try to be at your bestb.",
-              style: FontHelper.f14w400Regular.copyWith(
-            color: AppColor.black,),
+            10.heightSpace,
+            Expanded(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    14.heightSpace,
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(vertical: 25.h),
+                      decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Color(0xffDAF0FF),
+                              Color(0xffEEF9FF),
+                              Color(0xffDFE0E2),
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(20.r),
+                          border: Border.all(color: AppColor.border)),
+                      child: Column(
+                        children: [
+                          Text(
+                            "Total Amount",
+                            style: FontHelper.f14w500MediumStyle
+                                .copyWith(color: AppColor.tertiary),
+                          ),
+                          10.heightSpace,
+                          Text(
+                            "\$ 1,250.00",
+                            style: FontHelper.f24w500MediumStyle.copyWith(
+                              fontSize: 28.sp,
+                              color: AppColor.dark,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    30.heightSpace,
+                    _buildDetailRow("Unique Invoice Number", "1234566789"),
+                    _buildDetailRow("VAT Number", "1231231434"),
+                    _buildDetailRow("Client", "John Doe"),
+                    _buildDetailRow("Email", "john@gmail.com"),
+                    _buildDetailRow("Invoice Date", "1 Dec 2025"),
+                    14.heightSpace,
+                    Text(
+                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+                      style: FontHelper.f13w400Regular.copyWith(
+                        color: AppColor.dark,
+                        height: 1.5,
+                      ),
+                    ),
+                    30.heightSpace,
+                  ],
+                ),
+              ),
             ),
-            30.heightSpace,
-
-            _buildDateRow("Invoice Date", "1 March 2025"),
-            7.heightSpace,
-            _buildDateRow("Due Date", "30 March 2025"),
-            15.heightSpace,
-            const Divider(color: AppColor.border, thickness: 1),
-
           ],
         ),
       ),
@@ -97,36 +102,46 @@ class InvoiceDetailsView extends StatelessWidget {
   }
 
   Widget _buildDetailRow(String label, String value) {
-    return RichText(
-      text: TextSpan(
-        style: FontHelper.f16BoldStyle.copyWith(
-            color: AppColor.black, fontWeight: FontWeight.w400),
+    return Padding(
+      padding: EdgeInsets.only(bottom: 10.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TextSpan(
-            text: "$label ",
-            style: FontHelper.f18BoldStyle.copyWith(
-                color: AppColor.black, fontWeight: FontWeight.w700),          ),
-          TextSpan(text: value),
+          Text(
+            label,
+            style: FontHelper.f13w400Regular.copyWith(color: AppColor.dark),
+          ),
+          Text(
+            value,
+            style: FontHelper.f14w500MediumStyle.copyWith(
+              color: AppColor.dark,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildDateRow(String label, String date) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-          style: FontHelper.f16BoldStyle.copyWith(
-              color: AppColor.black, fontWeight: FontWeight.w400),
+  Widget _buildCircleButton(IconData? icon, VoidCallback onTap,
+      {bool isDownload = false}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 44.r,
+        width: 44.r,
+        decoration: BoxDecoration(
+          color: AppColor.white,
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: AppColor.border),
         ),
-        Text(
-          date,
-          style: FontHelper.f14w400Regular.copyWith(
-              color: AppColor.black,),
+        child: Center(
+          child: isDownload
+              ? Icon(Icons.file_download_outlined,
+                  size: 22.sp, color: AppColor.tertiary)
+              : Icon(icon, size: 16.sp, color: AppColor.tertiary),
         ),
-      ],
+      ),
     );
   }
 }

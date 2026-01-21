@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class AppColor {
   static const textGreen = Color(0xFF34A853);
   static const textLightGreen = Color(0xFF34A8531A);
-  static const primary = Color(0xff003F6E);
+  static const primary = Color(0xff166DDF);
+  static const background = Color(0xffF8FAFC);
   static const secondary = Color(0xff81B1CE);
   static const tertiary = Color(0xff8A9399);
   static const border = Color(0xffE7E7E7);
@@ -11,7 +12,6 @@ class AppColor {
   // static const lightYellow = Color(0xFFEEE8DF);
   static const kWhiteColor = Color(0XFFFFFFFF);
   // static const secondaryVariant = Color(0xFF018786);
-  static const background = Color(0XFFFAFAFA);
   static const stoke = Color(0xFFEDEDED);
   // static const green = Color(0xFF5DD874);
   static const lightGrey = Color(0xFFCACCCB);
@@ -24,6 +24,7 @@ class AppColor {
 
   static const black = Color(0xFF000000);
   static const white = Color(0xFFFFFFFF);
+  static const dark = Color(0xFF061A33);
   static const colorRed = Color(0xFFEA4335);
 
   static final borderColors = AppColor.white.withOpacity(0.05);
