@@ -89,7 +89,7 @@ class CustomFieldComponents extends StatelessWidget {
             onTapOutside: (_) => FocusScope.of(context).unfocus(),
             cursorColor: AppColor.black,
             style: FontHelper.f14w500MediumStyle.copyWith(
-              color: AppColor.black,
+              color: AppColor.darkBlueText,
             ),
             decoration: InputDecoration(
               isDense: true,

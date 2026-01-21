@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jobssy/presentation/authentication/signup_view.dart';
+import 'package:jobssy/presentation/authentication/employee_sign_up/signup_view.dart';
 import 'package:jobssy/presentation/customer_auth/customer_signup_view.dart';
 
 import '../../core/configs/colors/app_colors.dart';
@@ -23,30 +23,37 @@ class _SelectRoleViewState extends State<SelectRoleView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: SizedBox(
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              24.heightSpace,
+              44.heightSpace,
               Center(
                 child: Image.asset(
-                  Assets.imagesBluelogo,
-                  width: 187.w,
-                  height: 70.h,
+                  Assets.imagesBox,
+                  width: 46.w,
+                  height: 40.h,
                   fit: BoxFit.contain,
                 ),
               ),
+              Center(
+                child: Text("Jobssy",
+                    style: FontHelper.extraBoldStyle
 
-              15.heightSpace,
+                ),
+              ),
+
+              40.heightSpace,
 
               // Subtitle
               Text(
                 "Select a role to continue",
                 style: FontHelper.f16BoldStyle.copyWith(
-                    color: AppColor.black, fontWeight: FontWeight.bold),
+                  fontSize: 14.sp,
+                    color: AppColor.darkBlueText, fontWeight: FontWeight.w700),
               ),
 
               31.heightSpace,
@@ -59,7 +66,7 @@ class _SelectRoleViewState extends State<SelectRoleView> {
                     // Employee Card
                     Expanded(
                       child: RoleCard(
-                        icon: Assets.iconsEmployee,
+                        icon: Assets.imagesEmployee,
                         title: "Sign up as\nemployee",
                         isSelected: selectedRole == 0,
                         onTap: () {
@@ -76,7 +83,7 @@ class _SelectRoleViewState extends State<SelectRoleView> {
                     // Customer Card
                     Expanded(
                       child: RoleCard(
-                        icon: Assets.iconsCustomer,
+                        icon: Assets.imagesCustomer,
                         title: "Sign up as\nCustomer",
                         isSelected: selectedRole == 1,
                         onTap: () {
@@ -103,7 +110,7 @@ class _SelectRoleViewState extends State<SelectRoleView> {
   }
 }
 
-// Reusable Role Card Widget
+
 class RoleCard extends StatelessWidget {
   final String icon;
   final String title;
@@ -124,13 +131,13 @@ class RoleCard extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
-        height: 169.h,
-        width: 145.w,
+        height: 159.5.h,
+        width: 118.w,
         decoration: BoxDecoration(
-          color: AppColor.white,
-          borderRadius: BorderRadius.circular(20.r),
+          color: isSelected ? AppColor.btnBlue : AppColor.white, // container blue when selected
+          borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
-            color: isSelected ? AppColor.primary : const Color(0xffE7E7E7),
+            color: isSelected ?const Color(0xff166DDF1A).withOpacity(0.10) : const Color(0xffE7E7E7),
             width: isSelected ? 1.5 : 1,
           ),
         ),
@@ -147,7 +154,8 @@ class RoleCard extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: FontHelper.f14w500MediumStyle.copyWith(
-                color: isSelected ? AppColor.primary : AppColor.tertiary,
+                fontSize: 12.sp,
+                color: isSelected ? AppColor.white : AppColor.darkBlueText,
                 height: 1.4,
               ),
             ),

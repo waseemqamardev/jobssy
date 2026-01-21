@@ -9,7 +9,6 @@ import '../../core/configs/font_style.dart';
 import '../../core/global_components/customfield_component.dart';
 import '../../core/utils/extensions.dart';
 import '../../generated/assets.dart';
-import '../profile_setup/profile_setup_view.dart';
 
 class CustomerSignUpView extends StatefulWidget {
   const CustomerSignUpView({super.key});

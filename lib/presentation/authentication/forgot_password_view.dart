@@ -22,66 +22,85 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
-      appBar: AppBar(
-        toolbarHeight: 100.h,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: Padding(
-          padding: EdgeInsets.only(top: 50.h),
-          child: IconButton(
-            onPressed: () => Get.back(),
-            icon: const Icon(
-              Icons.arrow_back_ios_new,
-              color: AppColor.black,
-            ),
-          ),
-        ),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              50.heightSpace,
-              Text(
-                "Forgot Password",
-                style: FontHelper.f32w500MediumStyle.copyWith(
-                    color: AppColor.black, fontWeight: FontWeight.w700),
-              ),
-              12.heightSpace,
-              Text(
-                "Enter your email and password to reset the password",
-                style: FontHelper.f14w500MediumStyle.copyWith(
-                    color: AppColor.tertiary, fontWeight: FontWeight.w400),
-              ),
-              30.heightSpace,
-              CustomFieldComponents(
-                hint: "Email",
-                hintText: "example123@gmail.com",
-                controller: emailController,
-                keyboardType: TextInputType.emailAddress,
-                prefixIconWidget: Icon(Icons.person_outline,
-                    color: AppColor.black.withOpacity(0.7), size: 22.sp),
-              ),
-              30.heightSpace,
-              PrimaryButton(
-                height: 48.h,
-                onTap: () {
-                  Get.to(() => const CheckEmailView());
-                },
-                childWidget: Text(
-                  "Reset Password",
-                  style: FontHelper.f16w500MediumStyle.copyWith(
-                      fontWeight: FontWeight.w600, color: AppColor.white),
+      backgroundColor: Colors.transparent,
+
+
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            20.heightSpace,
+
+            Container(
+              width: 48.w,
+              height: 48.h,
+              decoration: BoxDecoration(
+                color: AppColor.white,
+                borderRadius: BorderRadius.circular(12.r),
+                border: Border.all(
+                  color: const Color(0xff166DDF1A).withOpacity(0.10),
                 ),
-                bgColor: AppColor.primary,
-                borderRadius: 11.85.r,
-                width: double.infinity,
               ),
-            ],
-          ),
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () => Get.back(),
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: AppColor.black,
+                ),
+              ),
+            ),
+
+            30.heightSpace,
+
+            Text(
+              "Forgot Password",
+              style: FontHelper.extraBoldStyle.copyWith(
+                color: AppColor.darkBlueText,
+                fontSize: 24.sp
+              ),
+            ),
+
+            12.heightSpace,
+
+            Text(
+              "Please enter your email to reset the password",
+              style: FontHelper.f13w500MediumStyle.copyWith(
+                color: AppColor.reLightGrey.withOpacity(0.60),
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+
+            30.heightSpace,
+
+            CustomFieldComponents(
+              hint: "Email",
+              hintText: "example123@gmail.com",
+              controller: emailController,
+              keyboardType: TextInputType.emailAddress,
+
+            ),
+
+            30.heightSpace,
+
+            PrimaryButton(
+              height: 48.h,
+              width: double.infinity,
+              bgColor: AppColor.primary,
+              borderRadius: 11.85.r,
+              onTap: () {
+                Get.to(() => const CheckEmailView());
+              },
+              childWidget: Text(
+                "Reset Password",
+                style: FontHelper.f16w500MediumStyle.copyWith(
+                  fontWeight: FontWeight.w600,
+                  color: AppColor.white,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

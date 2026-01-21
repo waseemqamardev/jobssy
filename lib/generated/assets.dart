@@ -3,6 +3,7 @@ class Assets {
   Assets._();
 
   static const String iconsApple = 'assets/icons/apple.png';
+  static const String iconsCalendar = 'assets/icons/calendar.png';
   static const String iconsCalender = 'assets/icons/calender.png';
   static const String iconsCamera = 'assets/icons/camera.png';
   static const String iconsCustomer = 'assets/icons/customer.png';
@@ -50,7 +51,9 @@ class Assets {
   static const String imagesBg = 'assets/images/bg.png';
   static const String imagesBluelogo = 'assets/images/bluelogo.png';
   static const String imagesBox = 'assets/images/box.png';
+  static const String imagesCustomer = 'assets/images/customer.png';
   static const String imagesDialogMap = 'assets/images/dialog_map.png';
+  static const String imagesEmployee = 'assets/images/employee.png';
   static const String imagesLocOnMap = 'assets/images/loc_on_map.png';
   static const String imagesLogo = 'assets/images/logo.png';
   static const String imagesOnboard1 = 'assets/images/onboard1.png';

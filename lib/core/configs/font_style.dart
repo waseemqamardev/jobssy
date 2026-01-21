@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'colors/app_colors.dart';
 
 class FontHelper {
-  static TextStyle defaultFontStyle = const TextStyle(
+  static TextStyle defaultFontStyle =  TextStyle(
     fontFamily: 'Inter',
     color: AppColor.reBlueShadeText,
     fontWeight: FontWeight.normal,
-    fontSize: 16,
+    fontSize: 16.sp,
   );
   static TextStyle  defaultTextStyle = defaultFontStyle.copyWith(
     color: AppColor.reBlueShadeText,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jobssy/presentation/authentication/forgot_password_view.dart';
-import 'package:jobssy/presentation/authentication/signup_view.dart';
+import 'package:jobssy/presentation/authentication/employee_sign_up/signup_view.dart';
 import 'package:jobssy/presentation/customer_auth/customer_signup_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
@@ -10,6 +10,7 @@ import '../../core/global_components/customfield_component.dart';
 import '../../core/global_components/primary_button.dart';
 import '../../core/utils/extensions.dart';
 import '../../generated/assets.dart';
+import '../roles/select_role_view.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -175,7 +176,7 @@ class _LoginViewState extends State<LoginView> {
               Center(
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(const CustomerSignUpView());
+                    Get.to(const SelectRoleView());
                   },
                   child: RichText(
                     text: TextSpan(

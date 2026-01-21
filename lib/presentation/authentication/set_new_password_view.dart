@@ -27,42 +27,75 @@ class _SetNewPasswordViewState extends State<SetNewPasswordView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
-      appBar: AppBar(
-        toolbarHeight: 100.h,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: Padding(
-          padding: EdgeInsets.only(top: 50.h),
-          child: IconButton(
-            onPressed: () => Get.back(),
-            icon: const Icon(
-              Icons.arrow_back_ios_new,
-              color: AppColor.black,
-            ),
-          ),
-        ),
-      ),
+      backgroundColor: Colors.transparent,
+
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              50.heightSpace,
+              20.heightSpace,
+
+              // Back button
+              Container(
+                width: 48.w,
+                height: 48.h,
+                decoration: BoxDecoration(
+                  color: AppColor.white,
+                  borderRadius: BorderRadius.circular(12.r),
+                  border: Border.all(
+                    color: const Color(0xff166DDF1A).withOpacity(0.10),
+                  ),
+                ),
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () => Get.back(),
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: AppColor.black,
+                  ),
+                ),
+              ),
+              24.heightSpace,
+
+
+              // Title
               Text(
                 "Set a new password",
-                style: FontHelper.f32w500MediumStyle.copyWith(
-                    color: AppColor.black, fontWeight: FontWeight.w700),
+                style: FontHelper.extraBoldStyle.copyWith(
+                  color: AppColor.darkBlueText,
+                  fontSize: 24.sp,
+                ),
               ),
-              12.heightSpace,
-              Text(
-                "Create a new password. Ensure it differs from previous ones for security",
-                style: FontHelper.f14w500MediumStyle.copyWith(
-                    color: AppColor.tertiary, fontWeight: FontWeight.w400),
-              ),
-              30.heightSpace,
+              6.heightSpace,
 
+              // Instruction text with highlighted email
+              Text.rich(
+                TextSpan(
+                  style: FontHelper.f13w500MediumStyle.copyWith(
+                    color: AppColor.reLightGrey.withOpacity(0.6),
+                    fontWeight: FontWeight.w400,
+                  ),
+                  children: const [
+                    TextSpan(
+                      text: "We sent a reset link to ",
+                    ),
+                    TextSpan(
+                      text: "abcde123@gmail.com",
+                      style: TextStyle(
+                        color: AppColor.darkBlueText,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    TextSpan(
+                      text: " \nenter 5 digit code that mentioned in the email",
+                    ),
+                  ],
+                ),
+              ),
+
+              24.heightSpace,
               CustomFieldComponents(
                 hint: "Password",
                 hintText: "Enter your Password",
@@ -111,7 +144,7 @@ class _SetNewPasswordViewState extends State<SetNewPasswordView> {
                       fontWeight: FontWeight.w600, color: AppColor.white),
                 ),
                 bgColor: AppColor.primary,
-                borderRadius: 11.85.r,
+                borderRadius: 12.r,
                 width: double.infinity,
               ),
             ],

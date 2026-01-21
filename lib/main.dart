@@ -8,7 +8,7 @@ import 'package:jobssy/presentation/authentication/forgot_password_view.dart';
 import 'package:jobssy/presentation/authentication/login_view.dart';
 import 'package:jobssy/presentation/authentication/password_changed_view.dart';
 import 'package:jobssy/presentation/authentication/set_new_password_view.dart';
-import 'package:jobssy/presentation/authentication/signup_view.dart';
+import 'package:jobssy/presentation/authentication/employee_sign_up/signup_view.dart';
 import 'package:jobssy/presentation/business_profile/business_profile_view.dart';
 import 'package:jobssy/presentation/customer_auth/customer_profile_setup_view.dart';
 import 'package:jobssy/presentation/customer_auth/customer_signup_view.dart';
@@ -110,23 +110,25 @@ class MyApp extends StatelessWidget {
           ),
 
           builder: (context, child) {
-            return Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFFDAF0FF),
-                    Color(0xFFEEF9FF),
-                    Color(0xFFDFE0E2),
-                  ],
+            return SafeArea(
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFFDAF0FF),
+                      Color(0xFFEEF9FF),
+                      Color(0xFFDFE0E2),
+                    ],
+                  ),
                 ),
+                child: child,
               ),
-              child: child,
             );
           },
 
-          home: const SplashView(),
+          home: const KYCInfoView(),
         );
       },
     );
