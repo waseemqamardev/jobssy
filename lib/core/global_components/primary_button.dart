@@ -59,7 +59,7 @@ class PrimaryButton extends StatelessWidget {
           alignment: Alignment.center,
           width: width ?? 100.w,
           decoration: BoxDecoration(
-            color: bgColor,
+            color: AppColor.btnBlue,
             shape: isShape ? BoxShape.circle : BoxShape.rectangle,
             border: isShape
                 ? Border.all(color: borderColor ?? AppColor.stoke)

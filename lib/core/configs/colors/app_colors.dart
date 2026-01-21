@@ -33,4 +33,14 @@ class AppColor {
 
 
   static const blackText = Color(0XFF191919);
- }
+
+///revamp
+  static const reBlueShadeText = Color(0XFF152F56);
+  static const btnBlue = Color(0xff166DDF);
+  static const darkBlueText = Color(0xff061A33);
+  static const reLightGrey = Color(0xff061A33);
+
+
+
+
+}

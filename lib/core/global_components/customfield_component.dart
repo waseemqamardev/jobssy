@@ -55,7 +55,8 @@ class CustomFieldComponents extends StatelessWidget {
           Text(
             hint!,
             style: FontHelper.f14w500MediumStyle.copyWith(
-              color: AppColor.black,
+              color: AppColor.darkBlueText,
+              fontSize: 13.sp,
               fontWeight: FontWeight.w400,
             ),
           ),
@@ -65,15 +66,15 @@ class CustomFieldComponents extends StatelessWidget {
         /// Input Box
         Container(
           width: width ?? double.infinity,
-          height: height ?? 56.h,
+          height: height ?? 44.h,
           alignment: Alignment.center,
           padding: EdgeInsets.symmetric(horizontal: 14.w),
           decoration: BoxDecoration(
             color: AppColor.white,
             borderRadius: BorderRadius.circular(12.r),
             border: Border.all(
-              color: Colors.grey.shade300,
-              width: 1,
+              color: Color(0xff166DDF1A).withOpacity(0.10),
+              width: 1.w,
             ),
           ),
           child: TextFormField(
@@ -88,7 +89,7 @@ class CustomFieldComponents extends StatelessWidget {
             onTapOutside: (_) => FocusScope.of(context).unfocus(),
             cursorColor: AppColor.black,
             style: FontHelper.f14w500MediumStyle.copyWith(
-              color: AppColor.black,
+              color: AppColor.darkBlueText,
             ),
             decoration: InputDecoration(
               isDense: true,
@@ -96,7 +97,8 @@ class CustomFieldComponents extends StatelessWidget {
 
               hintStyle: hintStyle ??
                   FontHelper.f16w500MediumStyle.copyWith(
-                    color: Colors.black,
+                    color: AppColor.reLightGrey.withOpacity(0.60),
+fontSize: 13.sp
                   ),
 
               border: InputBorder.none,

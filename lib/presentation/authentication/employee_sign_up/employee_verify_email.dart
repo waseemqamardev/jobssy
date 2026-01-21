@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jobssy/presentation/authentication/set_new_password_view.dart';
-import '../../core/configs/colors/app_colors.dart';
-import '../../core/configs/font_style.dart';
-import '../../core/utils/extensions.dart';
+import 'package:jobssy/core/utils/extensions.dart';
 
-class CheckEmailView extends StatefulWidget {
-  const CheckEmailView({super.key});
+import '../../../core/configs/colors/app_colors.dart';
+import '../../../core/configs/font_style.dart';
+import '../../employee_profile_setup/employee_profile_setup_view.dart';
+
+
+class EmployeeVerifyEmailView extends StatefulWidget {
+  const EmployeeVerifyEmailView({super.key});
 
   @override
-  State<CheckEmailView> createState() => _CheckEmailViewState();
+  State<EmployeeVerifyEmailView> createState() => _EmployeeVerifyEmailViewState();
 }
 
-class _CheckEmailViewState extends State<CheckEmailView> {
+class _EmployeeVerifyEmailViewState extends State<EmployeeVerifyEmailView> {
   final List<TextEditingController> _controllers =
   List.generate(6, (index) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
@@ -152,7 +154,7 @@ class _CheckEmailViewState extends State<CheckEmailView> {
                 GestureDetector(
                   onTap: () {
                     _startTimer(); // restart timer
-                    Get.to(() => const SetNewPasswordView());
+                    Get.to(() => const EmployeeProfileSetupView());
                   },
                   child: Text(
                     "Send code again",
@@ -160,8 +162,8 @@ class _CheckEmailViewState extends State<CheckEmailView> {
                       color: AppColor.btnBlue,
                       fontWeight: FontWeight.w500,
                       decoration: TextDecoration.underline,
-                      decorationColor: AppColor.btnBlue, // ✅ underline color
-                      decorationThickness: 0.2, // optional: thickness of underline
+                      decorationColor: AppColor.btnBlue,
+                      decorationThickness: 0.2,
 
                     ),
                   ),

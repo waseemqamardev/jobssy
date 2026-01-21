@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jobssy/presentation/authentication/forgot_password_view.dart';
-import 'package:jobssy/presentation/authentication/signup_view.dart';
+import 'package:jobssy/presentation/authentication/employee_sign_up/signup_view.dart';
 import 'package:jobssy/presentation/customer_auth/customer_signup_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
@@ -27,48 +27,53 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              100.heightSpace,
+              44.heightSpace,
               Center(
                 child: Image.asset(
-                  Assets.imagesBluelogo,
-                  width: 187.w,
-                  height: 70.h,
+                  Assets.imagesBox,
+                  width: 46.w,
+                  height: 40.h,
                   fit: BoxFit.contain,
+                ),
+              ),
+              Center(
+                child: Text("Jobssy",
+                    style: FontHelper.extraBoldStyle
+
                 ),
               ),
 
               15.heightSpace,
               Text(
                 "Log In",
-                style: FontHelper.f32w500MediumStyle.copyWith(
-                    color: AppColor.black, fontWeight: FontWeight.w700),
+                  style: FontHelper.extraBoldStyle.copyWith(
+                    fontSize: 24.sp,
+                    color: AppColor.darkBlueText
+                  )
+
               ),
-              12.heightSpace,
+              6.heightSpace,
               Text(
                 "Enter your email and password to log in",
                 style: FontHelper.f14w500MediumStyle.copyWith(
-                    color: AppColor.tertiary, fontWeight: FontWeight.w400),
+                    color: AppColor.reLightGrey.withOpacity(0.40), fontWeight: FontWeight.w400),
               ),
 
-              25.heightSpace,
+              24.heightSpace,
               CustomFieldComponents(
                 hint: "Email",
                 hintText: "example123@gmail.com",
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 enabled: true,
-                prefixIconWidget: Image.asset(
-                  Assets.iconsUsericon,
-                  width: 15.w,
-                  height: 16.h,
-                ),
+
               ),
 
               20.heightSpace,
@@ -80,16 +85,12 @@ class _LoginViewState extends State<LoginView> {
                 controller: passwordController,
                 obscureText: obscurePassword,
                 enabled: true,
-                prefixIconWidget: Image.asset(
-                  Assets.iconsPasswordicon,
-                  width: 15.w,
-                  height: 16.h,
-                ),
+
                 suffixIconWidget: obscurePassword
                     ? Image.asset(
                         Assets.iconsEyeOff,
-                        width: 20.sp,
-                        height: 20.sp,
+                        width: 18.sp,
+                        height: 18.sp,
                         color: Colors.grey,
                       )
                     : Icon(
@@ -115,9 +116,10 @@ class _LoginViewState extends State<LoginView> {
                   },
                   child: Text(
                     "Forgot Password ?",
-                    style: FontHelper.f12w500MediumStyle.copyWith(
-                      color: AppColor.black,
+                    style: FontHelper.f13w500MediumStyle.copyWith(
+                      color: AppColor.btnBlue,
                       fontWeight: FontWeight.w700,
+
                     ),
                   ),
                 ),
@@ -130,11 +132,11 @@ class _LoginViewState extends State<LoginView> {
                 onTap: () {},
                 childWidget: Text(
                   "Login",
-                  style: FontHelper.f16w500MediumStyle.copyWith(
+                  style: FontHelper.f14w500MediumStyle.copyWith(
                       fontWeight: FontWeight.w600, color: AppColor.white),
                 ),
-                bgColor: AppColor.primary,
-                borderRadius: 11.85.r,
+                bgColor: AppColor.btnBlue,
+                borderRadius: 12.r,
                 width: double.infinity,
               ),
 
@@ -143,17 +145,17 @@ class _LoginViewState extends State<LoginView> {
               // OR Divider
               Row(
                 children: [
-                  Expanded(child: Divider(color: Colors.grey.shade300)),
+                  Expanded(child: Divider(color: Color(0xff1D07431A).withOpacity(0.10))),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
                     child: Text("Or",
-                        style: TextStyle(color: Colors.grey, fontSize: 14.sp)),
+                        style: TextStyle(color: Color(0xff1D0743).withOpacity(0.60), fontSize: 14.sp)),
                   ),
-                  Expanded(child: Divider(color: Colors.grey.shade300)),
+                  Expanded(child: Divider(color: Color(0xff1D07431A).withOpacity(0.10))),
                 ],
               ),
 
-              25.heightSpace,
+              24.heightSpace,
 
               _socialButton(
                 icon: Assets.iconsGoogle,
@@ -180,12 +182,14 @@ class _LoginViewState extends State<LoginView> {
                     text: TextSpan(
                       text: "Don't have an account? ",
                       style: FontHelper.f12w500MediumStyle
-                          .copyWith(color: AppColor.tertiary),
+                          .copyWith(
+                        color: AppColor.darkBlueText.withOpacity(0.60),
+                      ),
                       children: [
                         TextSpan(
                           text: "Sign Up",
                           style: FontHelper.f12w500MediumStyle.copyWith(
-                            color: AppColor.primary,
+                            color: AppColor.btnBlue,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -213,7 +217,7 @@ class _LoginViewState extends State<LoginView> {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: Colors.grey.shade200),
+          border: Border.all(color: Color(0xff166DDF1A).withOpacity(0.10)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -223,7 +227,7 @@ class _LoginViewState extends State<LoginView> {
             Text(
               label,
               style: FontHelper.f14w500MediumStyle
-                  .copyWith(fontWeight: FontWeight.w600, color: AppColor.black),
+                  .copyWith(fontWeight: FontWeight.w600, color: AppColor.darkBlueText),
             ),
           ],
         ),

@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jobssy/presentation/authentication/login_view.dart';
-import 'package:jobssy/presentation/authentication/password_changed_view.dart';
-import 'package:jobssy/presentation/home_screen.dart';
+import '../../../core/configs/colors/app_colors.dart';
+import '../../../core/configs/font_style.dart';
+import '../../../core/global_components/customfield_component.dart';
 import '../../../core/global_components/primary_button.dart';
-import '../../core/configs/colors/app_colors.dart';
-import '../../core/configs/font_style.dart';
-import '../../core/global_components/customfield_component.dart';
-import '../../core/utils/extensions.dart';
-import '../../generated/assets.dart';
-import '../profile_setup/profile_setup_view.dart';
+import '../../../core/utils/extensions.dart';
+import '../../../generated/assets.dart';
+import 'employee_verify_email.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
@@ -24,8 +22,7 @@ class _SignUpViewState extends State<SignUpView> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   bool obscurePassword = true;
   bool obscureConfirmPassword = true;
@@ -33,93 +30,70 @@ class _SignUpViewState extends State<SignUpView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              24.heightSpace,
+              40.heightSpace,
               Center(
                 child: Image.asset(
-                  Assets.imagesBluelogo,
-                  width: 187.w,
-                  height: 70.h,
+                  Assets.imagesBox,
+                  width: 46.w,
+                  height: 40.h,
                   fit: BoxFit.contain,
                 ),
               ),
-
-              30.heightSpace,
-              Text(
-                "Sign up",
-                style: FontHelper.f24w500MediumStyle.copyWith(
-                  color: AppColor.black,
-                  fontSize: 28.sp,
-                  fontWeight: FontWeight.bold,
-                ),
+              Center(
+                child: Text("Jobssy",
+                    style: FontHelper.extraBoldStyle),
               ),
-              12.heightSpace,
+              40.heightSpace,
+              Text(
+                "Sign Up",
+                style: FontHelper.extraBoldStyle.copyWith(
+                    fontSize: 24.sp, color: AppColor.darkBlueText),
+              ),
+              6.heightSpace,
               Text(
                 "Create an account to continue!",
                 style: FontHelper.f14w500MediumStyle.copyWith(
-                  color: Colors.grey.shade500,
-                ),
+                    color: AppColor.reLightGrey.withOpacity(0.40),
+                    fontWeight: FontWeight.w400),
               ),
-
-              25.heightSpace,
+              24.heightSpace,
               CustomFieldComponents(
                 hint: "Full Name",
                 hintText: "Muhammad Farooq Ali",
                 controller: nameController,
               ),
-              12.heightSpace,
+              16.heightSpace,
               CustomFieldComponents(
                 hint: "Email",
                 hintText: "abcde123@gmail.com",
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
               ),
-              12.heightSpace,
-              CustomFieldComponents(
-                hint: "Birth of date",
-                hintText: "18/03/2024",
-                controller: dobController,
-                suffixIconWidget: Image.asset(
-                  Assets.iconsCalender,
-                  width: 16.w,
-                  height: 16.h,
-                ),
-                onTap: () async {
-                  // Date Picker Logic
-                  DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(1950),
-                    lastDate: DateTime.now(),
-                  );
-                  if (pickedDate != null) {
-                    setState(() {
-                      dobController.text =
-                          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
-                    });
-                  }
-                },
-              ),
+              16.heightSpace,
 
-              12.heightSpace,
-
-              // Set Password Field
               CustomFieldComponents(
                 hint: "Set Password",
-                hintText: "1234567",
+                hintText: "********",
                 controller: passwordController,
                 obscureText: obscurePassword,
-                suffixIconWidget: Image.asset(
-                  obscurePassword ? Assets.iconsEye : Assets.iconsEyeOff,
+                suffixIconWidget: obscurePassword
+                    ? Image.asset(
+                  Assets.iconsEyeOff,
                   width: 16.w,
                   height: 16.h,
-                  color: AppColor.tertiary,
+                  color: Colors.grey,
+                )
+                    : Icon(
+                  Icons.visibility_outlined,
+                  size: 20.sp,
+                  color: Colors.grey,
                 ),
                 onSuffixIconTap: () {
                   setState(() {
@@ -127,20 +101,23 @@ class _SignUpViewState extends State<SignUpView> {
                   });
                 },
               ),
-
-              12.heightSpace,
-
-              // Confirm Password Field
+              16.heightSpace,
               CustomFieldComponents(
                 hint: "Confirm Password",
-                hintText: "*********",
+                hintText: "********",
                 controller: confirmPasswordController,
                 obscureText: obscureConfirmPassword,
-                suffixIconWidget: Image.asset(
-                  obscurePassword ? Assets.iconsEye : Assets.iconsEyeOff,
+                suffixIconWidget: obscureConfirmPassword
+                    ? Image.asset(
+                  Assets.iconsEyeOff,
                   width: 16.w,
                   height: 16.h,
-                  color: AppColor.tertiary,
+                  color: Colors.grey,
+                )
+                    : Icon(
+                  Icons.visibility_outlined,
+                  size: 20.sp,
+                  color: Colors.grey,
                 ),
                 onSuffixIconTap: () {
                   setState(() {
@@ -148,25 +125,34 @@ class _SignUpViewState extends State<SignUpView> {
                   });
                 },
               ),
-
               25.heightSpace,
-
               PrimaryButton(
                 height: 48.h,
                 onTap: () {
-                  Get.to(() => const ProfileSetupView());
+                  Get.to(() => const EmployeeVerifyEmailView());
                 },
                 childWidget: Text(
                   "Sign Up",
-                  style: FontHelper.f16w500MediumStyle.copyWith(
+                  style: FontHelper.f14w500MediumStyle.copyWith(
                       fontWeight: FontWeight.w600, color: AppColor.white),
                 ),
-                bgColor: AppColor.primary,
-                borderRadius: 11.85.r,
+                bgColor: AppColor.btnBlue,
+                borderRadius: 12.r,
                 width: double.infinity,
               ),
-
-              30.heightSpace,
+              24.heightSpace,
+              // OR Divider
+              Row(
+                children: [
+                  Expanded(child: Divider(color: Color(0xff1D07431A).withOpacity(0.10))),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.w),
+                    child: Text("Or",
+                        style: TextStyle(color: Color(0xff1D0743).withOpacity(0.60), fontSize: 14.sp)),
+                  ),
+                  Expanded(child: Divider(color: Color(0xff1D07431A).withOpacity(0.10))),
+                ],
+              ),
 
               Center(
                 child: GestureDetector(
@@ -176,13 +162,14 @@ class _SignUpViewState extends State<SignUpView> {
                   child: RichText(
                     text: TextSpan(
                       text: "Already have an account? ",
-                      style: FontHelper.f14w500MediumStyle
-                          .copyWith(color: Colors.grey),
+                      style: FontHelper.f12w500MediumStyle.copyWith(
+                        color: AppColor.darkBlueText.withOpacity(0.60),
+                      ),
                       children: [
                         TextSpan(
                           text: "Login",
-                          style: FontHelper.f14w500MediumStyle.copyWith(
-                            color: AppColor.primary,
+                          style: FontHelper.f12w500MediumStyle.copyWith(
+                            color: AppColor.btnBlue,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -198,4 +185,6 @@ class _SignUpViewState extends State<SignUpView> {
       ),
     );
   }
+
+
 }
