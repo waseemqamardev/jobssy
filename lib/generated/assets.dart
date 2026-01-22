@@ -73,7 +73,6 @@ class Assets {
   static const String iconsUpload = 'assets/icons/upload.png';
   static const String iconsStar = 'assets/icons/Star.png';
   static const String iconsSupportnew = 'assets/icons/supportnew.png';
-  static const String iconsUpload = 'assets/icons/upload.png';
   static const String iconsUser = 'assets/icons/user.png';
   static const String iconsUserS = 'assets/icons/user_s.png';
   static const String iconsUsericon = 'assets/icons/usericon.png';

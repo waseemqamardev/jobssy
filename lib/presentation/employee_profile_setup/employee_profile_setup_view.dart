@@ -10,6 +10,7 @@ import '../../core/configs/font_style.dart';
 import '../../core/global_components/customfield_component.dart';
 import '../../core/utils/extensions.dart';
 import '../../generated/assets.dart';
+import '../kyc/kyc_info_view.dart';
 
 class EmployeeProfileSetupView extends StatefulWidget {
   const EmployeeProfileSetupView({super.key});
@@ -261,6 +262,7 @@ class _EmployeeProfileSetupViewState extends State<EmployeeProfileSetupView> {
               // Verify Email Button
               PrimaryButton(
                 onTap: () {
+                  Get.to(const KYCInfoView());
                 },
                 childWidget: Text(
                   "Next",
