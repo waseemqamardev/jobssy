@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jobssy/presentation/customer_home/customer_home_view.dart';
-import 'package:jobssy/presentation/jobs_in_progress/jobs_in_progress_view.dart';
-import 'package:jobssy/presentation/qr_scan/qr_scan_view.dart';
+import 'package:jobssy/presentation/customer_jobs/customer_jobs_view.dart';
+import 'package:jobssy/presentation/profile/profile_view.dart';
+import 'package:jobssy/presentation/qr_scan/scan_qrcode_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/utils/extensions.dart';
 import '../../generated/assets.dart';
-import '../business_profile/customer_profile.dart';
+import '../customer_wallet/customer_wallet_view.dart';
 import '../wallet/wallet_view.dart';
 
 class CustomerBottomNav extends StatefulWidget {
@@ -21,10 +22,10 @@ class _CustomerBottomNavState extends State<CustomerBottomNav> {
 
   final List<Widget> screens = [
     const CustomerHomeView(),
-    const JobsInProgressView(),
-    const QRScanView(),
-    const WalletView(),
-    const CustomerProfileView(),
+    const CustomerJobsView(),
+    const ScanQRCodeView(),
+    const CustomerWalletView(),
+    const ProfileView(),
   ];
 
   @override

@@ -17,7 +17,6 @@ class NotificationsView extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // 1. Custom Header
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
               child: Row(

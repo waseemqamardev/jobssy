@@ -26,6 +26,7 @@ class Assets {
   static const String iconsHomeS = 'assets/icons/home_s.png';
   static const String iconsHomelocation = 'assets/icons/homelocation.png';
   static const String iconsHomesearch = 'assets/icons/homesearch.png';
+  static const String iconsImageicon = 'assets/icons/imageicon.png';
   static const String iconsJobbIcon = 'assets/icons/jobb_icon.png';
   static const String iconsJobcardmap = 'assets/icons/jobcardmap.png';
   static const String iconsJobdetailbuilding = 'assets/icons/jobdetailbuilding.png';
@@ -64,10 +65,13 @@ class Assets {
   static const String iconsPkyc = 'assets/icons/pkyc.png';
   static const String iconsPlogout = 'assets/icons/plogout.png';
   static const String iconsPnotifications = 'assets/icons/pnotifications.png';
+  static const String iconsQrscanicon = 'assets/icons/qrscanicon.png';
   static const String iconsSavedjobs = 'assets/icons/savedjobs.png';
   static const String iconsScan = 'assets/icons/scan.png';
   static const String iconsSearchHistory = 'assets/icons/search_history.png';
+  static const String iconsStar = 'assets/icons/Star.png';
   static const String iconsSupportnew = 'assets/icons/supportnew.png';
+  static const String iconsUpload = 'assets/icons/upload.png';
   static const String iconsUser = 'assets/icons/user.png';
   static const String iconsUserS = 'assets/icons/user_s.png';
   static const String iconsUsericon = 'assets/icons/usericon.png';
