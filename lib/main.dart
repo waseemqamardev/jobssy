@@ -9,40 +9,44 @@ import 'package:jobssy/presentation/authentication/login_view.dart';
 import 'package:jobssy/presentation/authentication/password_changed_view.dart';
 import 'package:jobssy/presentation/authentication/set_new_password_view.dart';
 import 'package:jobssy/presentation/authentication/employee_sign_up/signup_view.dart';
-import 'package:jobssy/presentation/business_profile/business_profile_view.dart';
 import 'package:jobssy/presentation/customer_auth/customer_profile_setup_view.dart';
 import 'package:jobssy/presentation/customer_auth/customer_signup_view.dart';
 import 'package:jobssy/presentation/customer_bottom_nav/customer_bottomnav.dart';
 import 'package:jobssy/presentation/customer_home/add_jobpost_view.dart';
 import 'package:jobssy/presentation/customer_home/customer_home_view.dart';
-import 'package:jobssy/presentation/customer_home/recent_employee_view.dart';
+import 'package:jobssy/presentation/customer_jobs/all_reviews_view.dart';
 import 'package:jobssy/presentation/customer_jobs/customer_jobs_view.dart';
-import 'package:jobssy/presentation/customer_jobs/project_overview_view.dart';
-import 'package:jobssy/presentation/customer_jobs/proposal_view.dart';
-import 'package:jobssy/presentation/customer_jobs/proposals_list_view.dart';
+import 'package:jobssy/presentation/customer_jobs/job_summary_view.dart';
+import 'package:jobssy/presentation/customer_jobs/posted_job_details_view.dart';
+import 'package:jobssy/presentation/customer_profile/customer_view_profile_view.dart';
+import 'package:jobssy/presentation/customer_wallet/customer_wallet_view.dart';
+import 'package:jobssy/presentation/employee_profile_setup/employee_profile_setup_view.dart';
 import 'package:jobssy/presentation/home/home_view.dart';
 import 'package:jobssy/presentation/home/job_application_view.dart';
+import 'package:jobssy/presentation/home/job_details_view.dart';
 import 'package:jobssy/presentation/home/search_jobs_view.dart';
+import 'package:jobssy/presentation/home/search_result_list_view.dart';
 import 'package:jobssy/presentation/home_screen.dart';
+import 'package:jobssy/presentation/jobs/applied_job_detail_view.dart';
 import 'package:jobssy/presentation/jobs/my_jobs_view.dart';
-import 'package:jobssy/presentation/jobs/pending_jobs_view.dart';
-import 'package:jobssy/presentation/jobs/warehouse_associate_view.dart';
-import 'package:jobssy/presentation/jobs_in_progress/employee_feedback_view.dart';
-import 'package:jobssy/presentation/jobs_in_progress/job_not_completed_view.dart';
-import 'package:jobssy/presentation/jobs_in_progress/jobs_in_progress_view.dart';
-import 'package:jobssy/presentation/jobs_in_progress/proposal_detail_view.dart';
+import 'package:jobssy/presentation/jobs/ongoing_job_view.dart';
+import 'package:jobssy/presentation/jobs/upcoming_job_detail_view.dart';
 import 'package:jobssy/presentation/kyc/kyc_info_view.dart';
 import 'package:jobssy/presentation/notifications/notifications_view.dart';
 import 'package:jobssy/presentation/onboarding/onboarding_view.dart';
-import 'package:jobssy/presentation/profile/edit_profile_view.dart';
-import 'package:jobssy/presentation/profile/kyc_unverified_view.dart';
-import 'package:jobssy/presentation/profile/kyc_verified_view.dart';
-import 'package:jobssy/presentation/profile/password_reset_success_view.dart';
-import 'package:jobssy/presentation/profile/password_verification_view.dart';
+
+import 'package:jobssy/presentation/profile/change_password_view.dart';
+import 'package:jobssy/presentation/profile/profile_notifications_view.dart';
 import 'package:jobssy/presentation/profile/profile_view.dart';
 import 'package:jobssy/presentation/profile/verification_code_view.dart';
 import 'package:jobssy/presentation/profile/verification_email_view.dart';
-import 'package:jobssy/presentation/qr_scan/qr_scan_view.dart';
+import 'package:jobssy/presentation/profile/view_profile_view.dart';
+import 'package:jobssy/presentation/qr_scan/rejected_job_view.dart';
+import 'package:jobssy/presentation/qr_scan/scan_active_jobs_detail_view.dart';
+import 'package:jobssy/presentation/qr_scan/scan_finish_job_details_view.dart';
+import 'package:jobssy/presentation/qr_scan/scan_ongoing_job_view.dart';
+import 'package:jobssy/presentation/qr_scan/scan_qrcode_view.dart';
+import 'package:jobssy/presentation/qr_scan/scanqr_employee_feedback_view.dart';
 import 'package:jobssy/presentation/qr_scan/start_job_view.dart';
 import 'package:jobssy/presentation/roles/select_role_view.dart';
 import 'package:jobssy/presentation/splash/splash_view.dart';
@@ -160,6 +164,7 @@ class GradientBackground extends StatelessWidget {
 }
 
 
+
 class SimpleBottomNav extends StatefulWidget {
   const SimpleBottomNav({super.key});
 
@@ -179,87 +184,70 @@ class _SimpleBottomNavState extends State<SimpleBottomNav> {
 
   final List<String> labels = ["Home", "Jobs", "Wallet", "Profile"];
 
-  final List<String> inactiveIcons = [
-    Assets.iconsHome,
-    Assets.iconsJobs,
-    Assets.iconsWallet,
-    Assets.iconsUser,
-  ];
-
-  // Active Icons (Selected/Filled)
-  final List<String> activeIcons = [
-    Assets.iconsHomeS,
-    Assets.iconsJobsS,
-    Assets.iconsWalletS,
-    Assets.iconsUserS,
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[selectedIndex],
       bottomNavigationBar: Container(
-        height: 85.h,
-        decoration: const BoxDecoration(
-          color: AppColor.primary,
+        height: 75.h,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              spreadRadius: 2,
+            ),
+          ],
         ),
-        padding: EdgeInsets.symmetric(horizontal: 10.w),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: List.generate(4, (index) {
             bool isActive = selectedIndex == index;
 
+            String iconPath = _getIconPath(index, isActive);
+
             return GestureDetector(
               onTap: () => setState(() => selectedIndex = index),
               behavior: HitTestBehavior.opaque,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 250),
-                    width: isActive ? 70.w : 0,
-                    height: 2.h,
-                    color: Colors.white,
-                  ),
-                  15.heightSpace,
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        isActive ? activeIcons[index] : inactiveIcons[index],
-                        height: 22.h,
-                        width: 22.w,
-                        color: Colors.white,
+              child: SizedBox(
+                width: 60.w,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      iconPath,
+                      height: 24.h,
+                      width: 24.w,
+                      color: isActive ? AppColor.primary : Colors.grey.shade400,
+                    ),
+                    4.heightSpace,
+                    Text(
+                      labels[index],
+                      style: FontHelper.f12w500MediumStyle.copyWith(
+                        fontSize: 12.sp,
+                        fontWeight: isActive ? FontWeight.w600 : FontWeight.w400,
+                        color: isActive ? AppColor.primary : Colors.grey.shade400,
                       ),
-                      if (isActive) ...[
-                        8.widthSpace,
-                        Text(
-                          labels[index],
-                          style: FontHelper.f14w400Regular.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14.sp,
-                          ),
-                        ),
-                      ],
-                    ],
-                  ),
-
-                  15.heightSpace,
-                  AnimatedContainer(
-                    duration: const Duration(milliseconds: 250),
-                    width: isActive ? 70.w : 0,
-                    height: 2.h,
-                    color: Colors.white,
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
             );
           }),
         ),
       ),
     );
+  }
+
+  String _getIconPath(int index, bool isActive) {
+    switch (index) {
+      case 0: return isActive ? Assets.iconsHomeS : Assets.iconsHome;
+      case 1: return isActive ? Assets.iconsJobsS : Assets.iconsJobs;
+      case 2: return isActive ? Assets.iconsWalletS : Assets.iconsWallet;
+      case 3: return isActive ? Assets.iconsUserS : Assets.iconsUser;
+      default: return Assets.iconsHome;
+    }
   }
 }
 

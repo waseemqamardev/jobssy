@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:jobssy/presentation/customer_bottom_nav/customer_bottomnav.dart';
-import 'package:jobssy/presentation/profile/verification_code_view.dart';
 
 import '../../../core/global_components/primary_button.dart';
 import '../../core/configs/colors/app_colors.dart';
@@ -250,7 +249,7 @@ class _CustomerProfileSetupViewState extends State<CustomerProfileSetupView> {
               30.heightSpace,
               PrimaryButton(
                 onTap: () {
-                  Get.to(VerificationCodeView());
+                  // Get.to(VerificationCodeView());
                 },
                 childWidget: Text(
                   "Verify email",

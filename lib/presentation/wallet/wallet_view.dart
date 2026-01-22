@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jobssy/core/global_components/custom_search_bar.dart';
-import 'package:jobssy/core/global_components/customfield_component.dart';
+import 'package:jobssy/presentation/wallet/invoice_details_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
+import '../../core/global_components/customfield_component.dart';
 import '../../core/utils/extensions.dart';
 import '../../generated/assets.dart';
-import 'invoice_details_view.dart';
+import '../home/search_jobs_view.dart';
 
 class WalletView extends StatelessWidget {
   const WalletView({super.key});
@@ -15,144 +15,181 @@ class WalletView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
-      appBar: AppBar(
-        toolbarHeight: 100.h,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-
-        title:Column(
-          children: [
-            42.heightSpace,
-            Text(
-              "Wallet",
-              style: FontHelper.f24w500MediumStyle.copyWith(
-                  color: AppColor.black,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 26.sp
+      backgroundColor: AppColor.background,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              30.heightSpace,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Wallet",
+                      style: FontHelper.f20BoldStyle.copyWith(
+                          color: AppColor.dark, fontWeight: FontWeight.w700)),
+                  _buildNotificationIcon(),
+                ],
               ),
-            ),
-          ],
-        )
-
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Divider(
-              color: AppColor.border,
-              thickness: 1,
-            ),
-            20.heightSpace,
-            Text(
-              "Receipts",
-              style: FontHelper.f18BoldStyle.copyWith(
-                  color: AppColor.black, fontWeight: FontWeight.w400),
-            ),
-            8.heightSpace,
-            Text(
-              "View and download your transaction receipts",
-              style: FontHelper.f16BoldStyle.copyWith(
-                color: AppColor.tertiary,
-                fontWeight: FontWeight.w400,
+              20.heightSpace,
+              CustomFieldComponents(
+                borderColor: AppColor.border,
+                controller: TextEditingController(),
+                hintText: "Search Receipts",
+                height: 48.h,
+                prefixIconWidget: Image.asset(Assets.iconsHomesearch,
+                    height: 20.h, width: 20.w),
+                onTap: () => Get.to(() => const SearchJobsView()),
               ),
-            ),
-            15.heightSpace,
-            CustomFieldComponents(
-              prefixIconWidget: Image.asset(
-                Assets.iconsWalletsearch, width: 16.w, height: 16.h,),
-              controller: TextEditingController(),
-              hintText: "Search by job title or reciept number",
-              hintStyle: FontHelper.f12w500MediumStyle.copyWith(
-                color: AppColor.tertiary,
-                fontWeight: FontWeight.w200,
+              24.heightSpace,
+              Text("Receipts",
+                  style: FontHelper.f16BoldStyle.copyWith(
+                      color: AppColor.dark, fontWeight: FontWeight.w600)),
+              10.heightSpace,
+              Expanded(
+                child: GestureDetector(
+                  onTap: (){
+                    Get.to(()=>const InvoiceDetailsView());
+                  },
+                  child: ListView(
+                    children: [
+                      _buildReceiptCard(
+                        title: "Electrical Engineer",
+                        date: "18 Dec",
+                        time: "7:00 AM - 3:00 PM",
+                        amount: "\$1,250.00",
+                        status: "Complete",
+                        badgeColor: const Color(0xffE8F5E9),
+                        textColor: Colors.green,
+                        showDownload: true,
+                      ),
+                      _buildReceiptCard(
+                        title: "Car Mechanic",
+                        date: "18 Dec",
+                        time: "7:00 AM - 3:00 PM",
+                        amount: "\$720.00",
+                        status: "Pending",
+                        badgeColor: const Color(0xffFFF3E0),
+                        textColor: Colors.orange,
+                        showDownload: false,
+                      ),
+                      _buildReceiptCard(
+                        title: "Decor & Lights",
+                        date: "18 Dec",
+                        time: "7:00 AM - 3:00 PM",
+                        amount: "\$720.00",
+                        status: "Declined",
+                        badgeColor: const Color(0xffFFEBEE),
+                        textColor: Colors.red,
+                        showDownload: false,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              height: 40.h,
-            ),
-            25.heightSpace,
-            Expanded(
-              child: ListView.builder(
-                itemCount: 3,
-                itemBuilder: (context, index) => GestureDetector(
-                    onTap: (){
-                      Get.to(() => const InvoiceDetailsView());
-                    },
-                    child: _buildReceiptCard()),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-
-  Widget _buildReceiptCard() {
+  Widget _buildReceiptCard({
+    required String title,
+    required String date,
+    required String time,
+    required String amount,
+    required String status,
+    required Color badgeColor,
+    required Color textColor,
+    bool showDownload = false,
+  }) {
     return Container(
       margin: EdgeInsets.only(bottom: 16.h),
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: AppColor.white,
-        borderRadius: BorderRadius.circular(10.r),
+        borderRadius: BorderRadius.circular(15.r),
         border: Border.all(color: AppColor.border),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(Assets.iconsWallets, width: 47.w, height: 47.h,),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10.r),
+                child: Image.asset(Assets.imagesCoffeeshop,
+                    width: 45.w, height: 45.h, fit: BoxFit.cover),
+              ),
               12.widthSpace,
               Expanded(
-                child: Text(
-                  "Website Redesign Project",
-                  style: FontHelper.f18BoldStyle.copyWith(
-                      color: AppColor.black, fontWeight: FontWeight.w400),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(title,
+                            style: FontHelper.f16BoldStyle
+                                .copyWith(color: AppColor.dark,fontWeight: FontWeight.w600)),
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10.w, vertical: 4.h),
+                          decoration: BoxDecoration(
+                            color: badgeColor,
+                            borderRadius: BorderRadius.circular(20.r),
+                          ),
+                          child: Text(status,
+                              style: TextStyle(
+                                  color: textColor,
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ],
+                    ),
+                    5.heightSpace,
+                    Row(
+                      children: [
+                        Image.asset(
+                          Assets.iconsBlueCalender,
+                          width: 14.w,
+                          height: 14.h,
+                          color: AppColor.primary,
+                        ),
+                        4.widthSpace,
+                        Text(date,
+                            style: FontHelper.f12w500MediumStyle
+                                .copyWith(color: AppColor.tertiary)),
+                        12.widthSpace,
+                        Icon(Icons.access_time,
+                            color: AppColor.primary, size: 14.sp),
+                        4.widthSpace,
+                        Text(time,
+                            style: FontHelper.f12w500MediumStyle
+                                .copyWith(color: AppColor.tertiary)),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          12.heightSpace,
-          Row(
-            children: [
-              Image.asset(
-                Assets.iconsWalletCalender, width: 15.w, height: 15.h,),
-              5.widthSpace,
-              Text(
-                "Nov 18, 2025",
-                style: FontHelper.f14w400Regular.copyWith(
-                  color: AppColor.tertiary,),
-              ),
-            ],
-          ),
-          8.heightSpace,
-          Row(
-            children: [
-              Text(
-                "RCP-2025-001234",
-                style: FontHelper.f14w400Regular.copyWith(
-                  color: AppColor.tertiary,),),
-              12.widthSpace,
-              _buildPaymentTag(),
-            ],
-          ),
-          12.heightSpace,
+          15.heightSpace,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "\$1,250.00",
-                style: FontHelper.f24w500MediumStyle.copyWith(
-                    color: AppColor.black, fontWeight: FontWeight.w400),
-              ),
+              Text(amount,
+                  style: FontHelper.f18BoldStyle.copyWith(
+                      color: AppColor.dark, fontWeight: FontWeight.w700)),
               Row(
                 children: [
-                  _buildIconButton(Image.asset(Assets.iconsWalletDownload,width: 25.w,height: 25.h,)),
-                  8.widthSpace,
-                  _buildIconButton(Image.asset(Assets.iconsWalletEye,width: 25.w,height: 25.h,)),
+                  _buildIconButton(Assets.iconsWalletEye),
+                  if (showDownload) ...[
+                    8.widthSpace,
+                    _buildIconButton(Assets.iconsWalletDownload),
+                  ],
                 ],
               )
             ],
@@ -162,32 +199,37 @@ class WalletView extends StatelessWidget {
     );
   }
 
-  Widget _buildPaymentTag() {
+  Widget _buildIconButton(String assetPath) {
     return Container(
-      width: 70.w,
-      height: 22.h,
-      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+      height: 36.r,
+      width: 36.r,
       decoration: BoxDecoration(
-        color: AppColor.primary,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(8.r),
+        border: Border.all(color: AppColor.border),
       ),
-      child: Text(
-        "Payment",
-        style: FontHelper.f12w500MediumStyle.copyWith(
-            color: AppColor.white, fontWeight: FontWeight.w400),
-
-      ),
+      child: Center(
+          child: Image.asset(
+        assetPath,
+        width: 20.w,
+        height: 20.h,
+        color: AppColor.primary,
+      )),
     );
   }
 
-  Widget _buildIconButton(Image image) {
+  Widget _buildNotificationIcon() {
     return Container(
-      padding: EdgeInsets.all(2.w),
+      height: 48.h,
+      width: 48.w,
       decoration: BoxDecoration(
+        color: AppColor.white,
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: AppColor.border),
-        borderRadius: BorderRadius.circular(8.r),
       ),
-      child: image,
+      child: Center(
+          child: Image.asset(Assets.iconsNotificationnew,
+              height: 22.h, width: 22.w)),
     );
   }
 }

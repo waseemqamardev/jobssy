@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jobssy/presentation/authentication/login_view.dart';
-import 'package:jobssy/presentation/profile/edit_profile_view.dart';
+import 'package:jobssy/presentation/profile/change_password_view.dart';
+import 'package:jobssy/presentation/profile/contact_support_view.dart';
+import 'package:jobssy/presentation/profile/profile_notifications_view.dart';
+import 'package:jobssy/presentation/profile/view_profile_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/global_components/primary_button.dart';
 import '../../core/utils/extensions.dart';
 import '../../generated/assets.dart';
+import '../authentication/login_view.dart';
+import '../notifications/notifications_view.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
@@ -17,142 +21,117 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  bool isNotificationEnabled = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
-      appBar: AppBar(
-        toolbarHeight: 100.h,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        title: Column(
-          children: [
-            42.heightSpace,
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                Center(
-                  child: Text(
-                    "Profile",
-                    style: FontHelper.f24w500MediumStyle.copyWith(
-                      color: AppColor.black,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 26.sp,
-                    ),
-                  ),
-                ),
-
-              ],
-            ),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Divider(
-              color: AppColor.border,
-              thickness: 1,
-            ),
-            30.heightSpace,
-            GestureDetector(
-              onTap: (){
-                Get.to(EditProfileView());
-              },
-              child: Center(
-                child: Stack(
+      backgroundColor: AppColor.background,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              20.heightSpace,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 10.h),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: 139.w,
-                      height: 139.h,
-                      decoration: const BoxDecoration(
-                        color: AppColor.primary,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Image.asset(
-                          Assets.iconsPerson,
-                          width: 73.w,
-                          height: 62.h,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Image.asset(
-                          Assets.iconsCamera,
-                          width: 35.w,
-                          height: 34.h,
-                        )),
+                    Text("Profile",
+                        style: FontHelper.f20BoldStyle.copyWith(
+                            color: AppColor.dark, fontWeight: FontWeight.w700)),
+                    _buildNotificationBell(),
                   ],
                 ),
               ),
-            ),
-            12.heightSpace,
-            Text(
-              "Joffery starmer",
-              style: FontHelper.f18BoldStyle.copyWith(
-                color:AppColor.primary,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            30.heightSpace,
-
-            _buildSectionHeader("App prefrences"),
-            15.heightSpace,
-            _buildSettingsContainer([
-              _buildListTile(
-                Assets.iconsPnotifications,
-                "Notifications",
-                trailing: Switch(
-                  value: isNotificationEnabled,
-                  onChanged: (val) => setState(() => isNotificationEnabled = val),
-                  activeColor: AppColor.primary,
-                  inactiveTrackColor: AppColor.border,
-                  inactiveThumbColor: AppColor.white,
+              14.heightSpace,
+              Center(
+                child: Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 65.r,
+                      backgroundImage: AssetImage(Assets.imagesPerson),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        padding: EdgeInsets.all(6.r),
+                        decoration: BoxDecoration(
+                          color: AppColor.white,
+                          shape: BoxShape.circle,
+                          border: Border.all(color: AppColor.border, width: 1),
+                        ),
+                        child: Icon(Icons.camera_alt_outlined,
+                            size: 18.sp, color: AppColor.tertiary),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              const Divider(color: AppColor.border, height: 1),
-              _buildListTile(Assets.iconsPedit, "Edit Profile", onTap: () {}),
-            ]),
-
-            20.heightSpace,
-
-            _buildSectionHeader("Support"),
-            15.heightSpace,
-            _buildSettingsContainer([
-              _buildListTile(Assets.iconsPkyc, "KYC Status", onTap: () {}),
-              const Divider(color: AppColor.border, height: 1),
-              _buildListTile(Assets.iconsPchangePassword, "Change Password", onTap: () {}),
-              const Divider(color: AppColor.border, height: 1),
-              _buildListTile(
-                Assets.iconsPlogout,
-                "Logout",
-                textColor: Colors.red,
-                onTap: () => _showLogoutSheet(context),
+              10.heightSpace,
+              Text("John Doe",
+                  style: FontHelper.f18BoldStyle.copyWith(
+                      color: AppColor.dark, fontWeight: FontWeight.w700)),
+              2.heightSpace,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.star, color: Colors.amber, size: 18),
+                  Text(" 4.9 (37)",
+                      style: FontHelper.f14w400Regular
+                          .copyWith(color: AppColor.tertiary)),
+                ],
               ),
-            ]),
-            120.heightSpace,
-          ],
+              24.heightSpace,
+              _buildSectionHeader("App Preferences"),
+              15.heightSpace,
+              _buildSettingsContainer([
+                _buildListTile(Assets.iconsViewprofilenew, "View Profile",
+                    onTap: () {
+                  Get.to(ViewProfileView());
+                }),
+                const Divider(color: AppColor.border, height: 1, indent: 50),
+                _buildListTile(Assets.iconsNotificationnew, "Notifications",
+                    onTap: () {
+                  Get.to(() => const ProfileNotificationsView());
+                }),
+              ]),
+              25.heightSpace,
+              _buildSectionHeader("Support"),
+              15.heightSpace,
+              _buildSettingsContainer([
+                _buildListTile(Assets.iconsKycnew, "KYC Status",
+                    trailing: _buildStatusBadge("Verified"), onTap: () {}),
+                const Divider(color: AppColor.border, height: 1, indent: 50),
+                _buildListTile(Assets.iconsPasswordchangenew, "Change Password",
+                    onTap: () {
+                  Get.to(ChangePasswordView());
+                }),
+                const Divider(color: AppColor.border, height: 1, indent: 50),
+                _buildListTile(Assets.iconsSupportnew, "Contact Support",
+                    onTap: () {
+                  Get.to(ContactSupportView());
+                }),
+                const Divider(color: AppColor.border, height: 1, indent: 50),
+                _buildListTile(Assets.iconsPlogout, "Logout",
+                    textColor: Colors.red,
+                    iconColor: Colors.red,
+                    onTap: () => _showLogoutSheet(context)),
+              ]),
+              40.heightSpace,
+            ],
+          ),
         ),
       ),
     );
   }
 
-
   Widget _buildSectionHeader(String title) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 18.w,),
-      child: Text(
-        title,
-        style: FontHelper.f18BoldStyle.copyWith(color: AppColor.black,fontWeight: FontWeight.w700),
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 18.w),
+      child: Text(title,
+          style: FontHelper.f14w400Regular
+              .copyWith(color: AppColor.dark, fontWeight: FontWeight.w700)),
     );
   }
 
@@ -161,32 +140,72 @@ class _ProfileViewState extends State<ProfileView> {
       margin: EdgeInsets.symmetric(horizontal: 18.w),
       decoration: BoxDecoration(
         color: AppColor.white,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColor.border),
+        borderRadius: BorderRadius.circular(15.r),
       ),
       child: Column(children: children),
     );
   }
 
-  Widget _buildListTile(String assetPath, String title, {Widget? trailing, VoidCallback? onTap, Color? textColor}) {
+  Widget _buildListTile(String icon, String title,
+      {Widget? trailing,
+      VoidCallback? onTap,
+      Color? textColor,
+      Color? iconColor}) {
     return ListTile(
       onTap: onTap,
-      leading: Image.asset(assetPath, width: 20.w, height: 20.h),
-      title: Text(
-        title,
-        style: FontHelper.f16w500MediumStyle.copyWith(
-          color: textColor ?? AppColor.black,
-          fontWeight: FontWeight.w400,
-        ),
+      leading: Image.asset(
+        icon,
+        width: 24.w,
+        height: 24.h,
       ),
-      trailing: trailing,
+      title: Text(title,
+          style: FontHelper.f14w500MediumStyle.copyWith(
+              color: textColor ?? AppColor.dark, fontWeight: FontWeight.w400)),
+      trailing: trailing ??
+          Icon(Icons.arrow_forward_ios, size: 16.sp, color: AppColor.tertiary),
+    );
+  }
+
+  Widget _buildStatusBadge(String text) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+      decoration: BoxDecoration(
+        color: const Color(0xffE8F5E9),
+        borderRadius: BorderRadius.circular(20.r),
+      ),
+      child: Text(text,
+          style: TextStyle(
+              color: Colors.green,
+              fontSize: 10.sp,
+              fontWeight: FontWeight.bold)),
+    );
+  }
+
+  Widget _buildNotificationBell() {
+    return GestureDetector(
+      onTap: () {
+        Get.to(NotificationsView());
+      },
+      child: Container(
+        height: 48.h,
+        width: 48.w,
+        decoration: BoxDecoration(
+          color: AppColor.white,
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: AppColor.border),
+        ),
+        child: Center(
+            child: Image.asset(Assets.iconsNotificationnew,
+                height: 22.h, width: 22.w)),
+      ),
     );
   }
 
   void _showLogoutSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(25.r))),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(25.r))),
       builder: (context) => Container(
         padding: EdgeInsets.all(24.w),
         child: Column(
@@ -194,15 +213,17 @@ class _ProfileViewState extends State<ProfileView> {
           children: [
             Container(width: 40.w, height: 4.h, color: Colors.grey.shade300),
             30.heightSpace,
-            Text("Are you sure you want to logout", style: FontHelper.f18BoldStyle),
+            Text("Are you sure you want to logout",
+                style: FontHelper.f18BoldStyle),
             30.heightSpace,
             Row(
               children: [
                 Expanded(
                   child: PrimaryButton(
                     onTap: () => Get.to(LoginView()),
-                    bgColor: const Color(0xFF4285F4), // Light blue from image_d42dec
-                    childWidget: Text("Logout", style: TextStyle(color: Colors.white, fontSize: 16.sp)),
+                    bgColor: const Color(0xFF4285F4),
+                    childWidget: Text("Logout",
+                        style: TextStyle(color: Colors.white, fontSize: 16.sp)),
                   ),
                 ),
                 15.widthSpace,
@@ -211,7 +232,9 @@ class _ProfileViewState extends State<ProfileView> {
                     onTap: () => Navigator.pop(context),
                     bgColor: Colors.white,
                     borderColor: const Color(0xFF4285F4),
-                    childWidget: Text("Cancel", style: TextStyle(color: const Color(0xFF4285F4), fontSize: 16.sp)),
+                    childWidget: Text("Cancel",
+                        style: TextStyle(
+                            color: const Color(0xFF4285F4), fontSize: 16.sp)),
                   ),
                 ),
               ],

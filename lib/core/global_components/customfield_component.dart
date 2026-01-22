@@ -8,11 +8,9 @@ import '../utils/extensions.dart';
 class CustomFieldComponents extends StatelessWidget {
   final String? hint;
   final String? hintText;
-
   final TextStyle? hintStyle;
   final double? height;
   final double? width;
-
   final Widget? suffixIconWidget;
   final VoidCallback? onSuffixIconTap;
   final Widget? prefixIconWidget;
@@ -24,6 +22,8 @@ class CustomFieldComponents extends StatelessWidget {
   final Function(String)? onChanged;
   final List<TextInputFormatter>? inputFormatters;
   final bool enabled;
+  // 🔹 Added Optional Border Color
+  final Color? borderColor;
 
   const CustomFieldComponents({
     super.key,
@@ -43,6 +43,7 @@ class CustomFieldComponents extends StatelessWidget {
     this.keyboardType,
     this.onChanged,
     this.onTap,
+    this.borderColor, // Initialize here
   });
 
   @override
@@ -73,7 +74,8 @@ class CustomFieldComponents extends StatelessWidget {
             color: AppColor.white,
             borderRadius: BorderRadius.circular(12.r),
             border: Border.all(
-              color: Color(0xff166DDF1A).withOpacity(0.10),
+
+              color: borderColor ?? const Color(0xff166DDF1A).withOpacity(0.10),
               width: 1.w,
             ),
           ),
