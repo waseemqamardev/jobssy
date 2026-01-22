@@ -8,6 +8,8 @@ import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/global_components/customfield_component.dart';
 import '../../core/utils/extensions.dart';
+import '../../generated/assets.dart';
+import 'face_id_view.dart';
 
 class KYCInfoView extends StatefulWidget {
   const KYCInfoView({super.key});
@@ -37,11 +39,11 @@ class _KYCInfoViewState extends State<KYCInfoView> {
     },
     {
       "title": "KYC Identity Verification",
-      "subtitle": "Enter your Emirates ID details",
+      "subtitle": "Fill in your information",
     },
     {
       "title": "Upload Documents",
-      "subtitle": "Enter your Passport details",
+      "subtitle": "Fill in your information",
     },
   ];
 
@@ -140,12 +142,15 @@ class _KYCInfoViewState extends State<KYCInfoView> {
                 onTap: _nextStep,
                 height: 48.h,
                 width: double.infinity,
-                bgColor: AppColor.primary,
+                bgColor: activeStep == totalSteps - 1
+                    ? const Color(0xffB8BFC9)
+                    : AppColor.btnBlue,
                 borderRadius: 12.r,
                 childWidget: Text(
-                  activeStep == totalSteps - 1 ? "Submit" : "Next",
-                  style: FontHelper.f15w600SemiBold
-                      .copyWith(color: AppColor.white),
+                  activeStep == totalSteps - 1 ? "Upload and Finish" : "Next",
+                  style: FontHelper.f15w600SemiBold.copyWith(
+                    color: AppColor.white,
+                  ),
                 ),
               ),
 
@@ -211,12 +216,123 @@ class _KYCInfoViewState extends State<KYCInfoView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _sectionTitle("Passport"),
-        16.heightSpace,
-        CustomFieldComponents(
-          hint: "Enter Passport No.",
-          hintText: "P0000000",
-          controller: passportController,
+        5.heightSpace,
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 24.h),
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: AppColor.white,
+              borderRadius: BorderRadius.circular(12.r),
+              border: Border.all(
+                color: const Color(0xff166ddf1a).withOpacity(0.10),
+                width: 1.w,
+              )),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                Assets.iconsLiveFace,
+                width: 24.w,
+                height: 24.h,
+                fit: BoxFit.cover,
+                color: AppColor.darkBlueText.withOpacity(0.60),
+              ),
+              8.heightSpace,
+              Text(
+                "Live Face ID Verification",
+                style: FontHelper.f13w400Regular.copyWith(
+                  color: AppColor.darkBlueText.withOpacity(0.60),
+                ),
+              ),
+              8.heightSpace,
+              PrimaryButton(
+                  height: 36.h,
+                  width: 173.w,
+                  onTap: () {
+                    Get.to(() => const FaceIdView());
+
+                  },
+                  childWidget: Text(
+                    "Start Face ID Verification",
+                    style: FontHelper.f14w500MediumStyle.copyWith(
+                        color: AppColor.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12.sp),
+                  ),
+                  bgColor: AppColor.btnBlue)
+            ],
+          ),
         ),
+        24.heightSpace,
+        _sectionTitle("Passport"),
+        5.heightSpace,
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 24.h),
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: AppColor.white,
+              borderRadius: BorderRadius.circular(12.r),
+              border: Border.all(
+                color: const Color(0xff166DDF1A).withOpacity(0.10),
+                width: 1.w,
+              )),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                Assets.iconsLiveFace,
+                width: 24.w,
+                height: 24.h,
+                fit: BoxFit.cover,
+                color: AppColor.darkBlueText.withOpacity(0.60),
+              ),
+              8.heightSpace,
+              Text(
+                "Upload Front Side ID Photo",
+                style: FontHelper.f13w400Regular.copyWith(
+                  color: AppColor.darkBlueText.withOpacity(0.60),
+                ),
+              ),
+            ],
+          ),
+        ),
+        24.heightSpace,
+        _sectionTitle("Passport"),
+        5.heightSpace,
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 24.h),
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: AppColor.white,
+              borderRadius: BorderRadius.circular(12.r),
+              border: Border.all(
+                color: const Color(0xff166DDF1A).withOpacity(0.10),
+                width: 1.w,
+              )),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                Assets.iconsLiveFace,
+                width: 24.w,
+                height: 24.h,
+                fit: BoxFit.cover,
+                color: AppColor.darkBlueText.withOpacity(0.60),
+              ),
+              8.heightSpace,
+              Text(
+                "Upload Back Side ID Photo",
+                style: FontHelper.f13w400Regular.copyWith(
+                  color: AppColor.darkBlueText.withOpacity(0.60),
+                ),
+              ),
+            ],
+          ),
+        ),
+        24.heightSpace,
       ],
     );
   }
@@ -224,23 +340,21 @@ class _KYCInfoViewState extends State<KYCInfoView> {
   // ---------------- Reusable Widgets ----------------
 
   Widget _sectionTitle(String title) => Text(
-    title,
-    style: FontHelper.f18BoldStyle.copyWith(
-      color: AppColor.black,
-      fontWeight: FontWeight.w400,
-    ),
-  );
+        title,
+        style: FontHelper.f13w400Regular.copyWith(
+          color: AppColor.darkBlueText,
+          fontWeight: FontWeight.w500,
+        ),
+      );
 
   Widget _buildLabel(String label) => Padding(
-    padding: EdgeInsets.only(bottom: 8.h),
-    child: Text(
-      label,
-      style:
-      FontHelper.f12w500MediumStyle.copyWith(
-          fontSize: 13.sp,
-          color: AppColor.darkBlueText),
-    ),
-  );
+        padding: EdgeInsets.only(bottom: 8.h),
+        child: Text(
+          label,
+          style: FontHelper.f12w500MediumStyle
+              .copyWith(fontSize: 13.sp, color: AppColor.darkBlueText),
+        ),
+      );
 
   Widget _buildDropdown({
     required String value,
@@ -268,14 +382,14 @@ class _KYCInfoViewState extends State<KYCInfoView> {
           items: items
               .map(
                 (e) => DropdownMenuItem(
-              value: e,
-              child: Text(
-                e,
-                style: FontHelper.f16w500MediumStyle
-                    .copyWith(color: AppColor.darkBlueText),
-              ),
-            ),
-          )
+                  value: e,
+                  child: Text(
+                    e,
+                    style: FontHelper.f16w500MediumStyle
+                        .copyWith(color: AppColor.darkBlueText),
+                  ),
+                ),
+              )
               .toList(),
           onChanged: onChanged,
         ),

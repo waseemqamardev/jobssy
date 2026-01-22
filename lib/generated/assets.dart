@@ -24,6 +24,7 @@ class Assets {
   static const String iconsJobsS = 'assets/icons/jobs_s.png';
   static const String iconsJobsTag = 'assets/icons/jobs_tag.png';
   static const String iconsJobsTime = 'assets/icons/jobs_time.png';
+  static const String iconsLiveFace = 'assets/icons/live_face.png';
   static const String iconsLocMap = 'assets/icons/loc_map.png';
   static const String iconsMapIcon = 'assets/icons/map_icon.png';
   static const String iconsNotification = 'assets/icons/notification.png';
@@ -37,6 +38,7 @@ class Assets {
   static const String iconsPnotifications = 'assets/icons/pnotifications.png';
   static const String iconsScan = 'assets/icons/scan.png';
   static const String iconsSearchHistory = 'assets/icons/search_history.png';
+  static const String iconsUpload = 'assets/icons/upload.png';
   static const String iconsUser = 'assets/icons/user.png';
   static const String iconsUserS = 'assets/icons/user_s.png';
   static const String iconsUsericon = 'assets/icons/usericon.png';
@@ -58,6 +60,9 @@ class Assets {
   static const String imagesLogo = 'assets/images/logo.png';
   static const String imagesOnboard1 = 'assets/images/onboard1.png';
   static const String imagesOnboard2 = 'assets/images/onboard2.png';
+  static const String imagesOnboarding1 = 'assets/images/onboarding_1.png';
+  static const String imagesOnboarding2 = 'assets/images/onboarding_2.png';
+  static const String imagesOnboarding3 = 'assets/images/onboarding_3.png';
   static const String imagesPerson = 'assets/images/person.png';
   static const String imagesQr = 'assets/images/qr.png';
   static const String imagesTruck = 'assets/images/truck.png';

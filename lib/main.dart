@@ -127,8 +127,7 @@ class MyApp extends StatelessWidget {
               ),
             );
           },
-
-          home: const KYCInfoView(),
+          home: const SplashView(),
         );
       },
     );
