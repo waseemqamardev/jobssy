@@ -26,7 +26,7 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.background,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Stack(
           children: [
@@ -382,122 +382,167 @@ class _HomeViewState extends State<HomeView> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: AppColor.background,
+      backgroundColor: Colors.transparent, // 🔴 IMPORTANT
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(25.r)),
       ),
       builder: (context) {
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30.w),
-          // 🔹 SafeArea ya Container use karein background color confirm karne ke liye
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              30.heightSpace,
-              Text("Select Filters",
-                  style: FontHelper.f16BoldStyle.copyWith(
-                      color: AppColor.black, fontWeight: FontWeight.w600)),
-              Text("Please select the filters as per your preferences.",
-                  style: FontHelper.f13w400Regular
-                      .copyWith(color: AppColor.tertiary)),
-              12.heightSpace,
-              Divider(color: AppColor.tertiary.withOpacity(0.5)),
-              12.heightSpace,
+        return Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25.r)),
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFFDAF0FF),
+                Color(0xFFEEF9FF),
+                Color(0xFFDFE0E2),
+              ],
+            ),
+          ),
+          child: SafeArea(
+            top: false,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.w),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  30.heightSpace,
 
-              // --- Job Type ---
-              Text("Job Type",
-                  style: FontHelper.f14w400Regular
-                      .copyWith(color: AppColor.black)),
-              7.heightSpace,
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 15.w),
-                decoration: BoxDecoration(
-                  color: AppColor.white, // Dropdown bg white
-                  borderRadius: BorderRadius.circular(10.r),
-                  border: Border.all(color: AppColor.border),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-                    isExpanded: true,
-                    value: "All",
-                    dropdownColor: AppColor.white,
-                    items: ["All", "Barista", "Cleaner", "Cashier"]
-                        .map((String value) {
-                      return DropdownMenuItem<String>(
-                          value: value, child: Text(value));
-                    }).toList(),
-                    onChanged: (_) {},
+                  /// Title
+                  Text(
+                    "Select Filters",
+                    style: FontHelper.f16BoldStyle.copyWith(
+                      color: AppColor.black,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-              ),
 
-              12.heightSpace,
-              Text("Distance",
-                  style: FontHelper.f14w400Regular
-                      .copyWith(color: AppColor.black)),
-              Slider(
-                  value: 0.4, onChanged: (v) {}, activeColor: AppColor.primary),
+                  Text(
+                    "Please select the filters as per your preferences.",
+                    style: FontHelper.f13w400Regular
+                        .copyWith(color: AppColor.tertiary),
+                  ),
 
-              Text("Pay Range",
-                  style: FontHelper.f14w400Regular
-                      .copyWith(color: AppColor.black)),
-              RangeSlider(
-                values: const RangeValues(20, 80),
-                min: 0,
-                max: 100,
-                onChanged: (v) {},
-                activeColor: AppColor.primary,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("\$5/hr",
-                      style: FontHelper.f14w400Regular
-                          .copyWith(color: AppColor.black)),
-                  Text("\$100/hr",
-                      style: FontHelper.f14w400Regular
-                          .copyWith(color: AppColor.black))
-                ],
-              ),
+                  12.heightSpace,
+                  Divider(color: AppColor.tertiary.withOpacity(0.5)),
+                  12.heightSpace,
 
-              30.heightSpace,
+                  /// Job Type
+                  Text(
+                    "Job Type",
+                    style: FontHelper.f14w400Regular
+                        .copyWith(color: AppColor.black),
+                  ),
+                  7.heightSpace,
 
-              Row(
-                children: [
-                  Expanded(
-                    child: PrimaryButton(
-                      onTap: () {},
-                      width: double.infinity,
-                      height: 44.h,
-                      bgColor: Colors.white,
-                      borderRadius: 10.r,
-                      childWidget: Text(
-                        "Reset",
-                        style: FontHelper.f15w600SemiBold
-                            .copyWith(color: AppColor.tertiary),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 15.w),
+                    decoration: BoxDecoration(
+                      color: AppColor.white,
+                      borderRadius: BorderRadius.circular(10.r),
+                      border: Border.all(color: AppColor.border),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        value: "All",
+                        dropdownColor: AppColor.white,
+                        items: ["All", "Barista", "Cleaner", "Cashier"]
+                            .map(
+                              (value) => DropdownMenuItem(
+                            value: value,
+                            child: Text(value),
+                          ),
+                        )
+                            .toList(),
+                        onChanged: (_) {},
                       ),
                     ),
                   ),
-                  12.widthSpace,
-                  Expanded(
-                    child: PrimaryButton(
-                      onTap: () {},
-                      width: double.infinity,
-                      height: 44.h,
-                      bgColor: AppColor.primary,
-                      borderRadius: 10.r,
-                      childWidget: Text(
-                        "Apply Filters",
-                        style: FontHelper.f15w600SemiBold
-                            .copyWith(color: AppColor.white),
-                      ),
-                    ),
+
+                  12.heightSpace,
+
+                  /// Distance
+                  Text(
+                    "Distance",
+                    style: FontHelper.f14w400Regular
+                        .copyWith(color: AppColor.black),
                   ),
+
+                  Slider(
+                    value: 0.4,
+                    onChanged: (v) {},
+                    activeColor: AppColor.primary,
+                  ),
+
+                  /// Pay Range
+                  Text(
+                    "Pay Range",
+                    style: FontHelper.f14w400Regular
+                        .copyWith(color: AppColor.black),
+                  ),
+
+                  RangeSlider(
+                    values: const RangeValues(20, 80),
+                    min: 0,
+                    max: 100,
+                    onChanged: (v) {},
+                    activeColor: AppColor.primary,
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("\$5/hr",
+                          style: FontHelper.f14w400Regular
+                              .copyWith(color: AppColor.black)),
+                      Text("\$100/hr",
+                          style: FontHelper.f14w400Regular
+                              .copyWith(color: AppColor.black)),
+                    ],
+                  ),
+
+                  30.heightSpace,
+
+                  /// Buttons
+                  Row(
+                    children: [
+                      Expanded(
+                        child: PrimaryButton(
+                          onTap: () {},
+                          height: 44.h,
+                          bgColor: Colors.white,
+                          borderRadius: 10.r,
+                          childWidget: Text(
+                            "Reset",
+                            style: FontHelper.f15w600SemiBold
+                                .copyWith(color: AppColor.tertiary),
+                          ),
+                        ),
+                      ),
+                      12.widthSpace,
+                      Expanded(
+                        child: PrimaryButton(
+                          onTap: () {},
+                          height: 44.h,
+                          bgColor: AppColor.primary,
+                          borderRadius: 10.r,
+                          childWidget: Text(
+                            "Apply Filters",
+                            style: FontHelper.f15w600SemiBold
+                                .copyWith(color: AppColor.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  20.heightSpace,
                 ],
               ),
-              20.heightSpace,
-            ],
+            ),
           ),
         );
       },

@@ -21,7 +21,7 @@ class _SearchResultListViewState extends State<SearchResultListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Stack(
           children: [

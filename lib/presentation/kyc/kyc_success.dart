@@ -87,7 +87,7 @@ class _KycSuccessViewState extends State<KycSuccessView> with SingleTickerProvid
                 PrimaryButton(
                   height: 48.h,
                   onTap: () {
-                    Get.to(() => const CustomerBottomNav());
+                    Get.to(() => const HomeView());
                   },
                   childWidget: Text(
                     "Proceed to Home",

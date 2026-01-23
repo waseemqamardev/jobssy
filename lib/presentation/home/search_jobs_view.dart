@@ -29,7 +29,7 @@ class SearchJobsView extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: AppColor.white,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 18),
