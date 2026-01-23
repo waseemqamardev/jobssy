@@ -13,7 +13,7 @@ class AppliedJobDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.background,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Column(
           children: [
@@ -121,7 +121,7 @@ class AppliedJobDetailsView extends StatelessWidget {
 
       context: context,
       isScrollControlled: true,
-      backgroundColor: AppColor.background,
+      backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),

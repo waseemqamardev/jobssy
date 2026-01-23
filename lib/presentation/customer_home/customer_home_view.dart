@@ -22,7 +22,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.background,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Stack(
           children: [

@@ -15,7 +15,7 @@ class PostedJobDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.background,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Column(
           children: [
@@ -86,7 +86,7 @@ class PostedJobDetailsView extends StatelessWidget {
                         style: FontHelper.f14w500MediumStyle.copyWith(
                             fontWeight: FontWeight.w700, color: AppColor.red),
                       ),
-                      bgColor: AppColor.background,
+                      bgColor:Colors.transparent,
                       borderRadius: 12.r,
                     ),
                     20.heightSpace,

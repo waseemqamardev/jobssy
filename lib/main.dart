@@ -11,6 +11,8 @@ import 'package:jobssy/presentation/authentication/set_new_password_view.dart';
 import 'package:jobssy/presentation/authentication/employee_sign_up/signup_view.dart';
 import 'package:jobssy/presentation/customer_auth/customer_profile_setup_view.dart';
 import 'package:jobssy/presentation/customer_auth/customer_signup_view.dart';
+import 'package:jobssy/presentation/customer_auth/customer_verify_email_view.dart';
+
 import 'package:jobssy/presentation/customer_bottom_nav/customer_bottomnav.dart';
 import 'package:jobssy/presentation/customer_home/add_jobpost_view.dart';
 import 'package:jobssy/presentation/customer_home/customer_home_view.dart';

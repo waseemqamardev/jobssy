@@ -20,7 +20,7 @@ void showWorkerRequestBottomSheet(BuildContext context) {
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
         decoration: BoxDecoration(
-          color: AppColor.background,
+          color: Colors.transparent,
           borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
         ),
         child: Column(

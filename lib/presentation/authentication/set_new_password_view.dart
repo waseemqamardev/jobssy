@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jobssy/presentation/authentication/login_view.dart';
 import 'package:jobssy/presentation/authentication/password_changed_view.dart';
 
 import '../../../core/global_components/primary_button.dart';
@@ -70,7 +71,6 @@ class _SetNewPasswordViewState extends State<SetNewPasswordView> {
               ),
               6.heightSpace,
 
-              // Instruction text with highlighted email
               Text.rich(
                 TextSpan(
                   style: FontHelper.f13w500MediumStyle.copyWith(
@@ -135,8 +135,7 @@ class _SetNewPasswordViewState extends State<SetNewPasswordView> {
               PrimaryButton(
                 height: 48.h,
                 onTap: () {
-                  Get.to(() => const PasswordChangedView());
-
+                  _showSuccessDialog(context);
                 },
                 childWidget: Text(
                   "Update Password",
@@ -153,5 +152,67 @@ class _SetNewPasswordViewState extends State<SetNewPasswordView> {
       ),
     );
   }
+
+  void _showSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: AppColor.white,
+          insetPadding: EdgeInsets.symmetric(horizontal: 20.w),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.r),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  Assets.imagesSuccessdialog,
+                  width: 170.w,
+                  height: 180.h,
+                  fit: BoxFit.contain,
+                ),
+                20.heightSpace,
+                Text(
+                  "Password Updated",
+                  style: FontHelper.f24w500MediumStyle.copyWith(
+                      color: AppColor.black, fontWeight: FontWeight.w600),
+                ),
+                12.heightSpace,
+                Text(
+                  "Your new password has been updated successfully. Log In to continue",
+                  textAlign: TextAlign.center,
+                  style: FontHelper.f14w400Regular.copyWith(
+                    color: AppColor.tertiary,
+                    height: 1.5,
+                  ),
+                ),
+                30.heightSpace,
+                PrimaryButton(
+                  height: 48.h,
+                  onTap: () {
+                    Get.back();
+                    Get.offAll(() => const LoginView());
+                  },
+                  childWidget: Text(
+                    "Login",
+                    style: FontHelper.f15w600SemiBold
+                        .copyWith(color: AppColor.white),
+                  ),
+                  bgColor: AppColor.primary,
+                  borderRadius: 12.r,
+                  width: double.infinity,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 
 }

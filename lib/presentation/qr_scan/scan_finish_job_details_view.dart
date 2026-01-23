@@ -21,7 +21,7 @@ class _ScanFinishedJobDetailViewState extends State<ScanFinishedJobDetailView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.background,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Column(
           children: [

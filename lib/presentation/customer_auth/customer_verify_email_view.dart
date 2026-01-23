@@ -4,22 +4,23 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jobssy/core/utils/extensions.dart';
+import 'package:jobssy/presentation/customer_auth/customer_profile_setup_view.dart';
 
 import '../../../core/configs/colors/app_colors.dart';
 import '../../../core/configs/font_style.dart';
-import '../../../core/global_components/primary_button.dart';
-import '../../../generated/assets.dart';
-import '../../employee_profile_setup/employee_profile_setup_view.dart';
+import '../../core/global_components/primary_button.dart';
+import '../../generated/assets.dart';
+import '../employee_profile_setup/employee_profile_setup_view.dart';
 
 
-class EmployeeVerifyEmailView extends StatefulWidget {
-  const EmployeeVerifyEmailView({super.key});
+class CustomerVerifyEmailView extends StatefulWidget {
+  const CustomerVerifyEmailView({super.key});
 
   @override
-  State<EmployeeVerifyEmailView> createState() => _EmployeeVerifyEmailViewState();
+  State<CustomerVerifyEmailView> createState() => _CustomerVerifyEmailViewState();
 }
 
-class _EmployeeVerifyEmailViewState extends State<EmployeeVerifyEmailView> {
+class _CustomerVerifyEmailViewState extends State<CustomerVerifyEmailView> {
   final List<TextEditingController> _controllers =
   List.generate(6, (index) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
@@ -156,7 +157,7 @@ class _EmployeeVerifyEmailViewState extends State<EmployeeVerifyEmailView> {
                 GestureDetector(
                   onTap: () {
                     _startTimer(); // restart timer
-                    Get.to(() => const EmployeeProfileSetupView());
+                    Get.to(() => const CustomerProfileSetupView());
                   },
                   child: Text(
                     "Send code again",
@@ -201,8 +202,6 @@ class _EmployeeVerifyEmailViewState extends State<EmployeeVerifyEmailView> {
       ),
     );
   }
-
-
   void _showSuccessDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -245,7 +244,7 @@ class _EmployeeVerifyEmailViewState extends State<EmployeeVerifyEmailView> {
                   height: 48.h,
                   onTap: () {
                     Get.back();
-                    Get.offAll(() => const EmployeeProfileSetupView());
+                    Get.offAll(() => const CustomerProfileSetupView());
                   },
                   childWidget: Text(
                     "Profile Setup",

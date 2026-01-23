@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jobssy/presentation/kyc/kyc_success.dart';
+import 'package:jobssy/main.dart';
 
 import '../../../core/global_components/primary_button.dart';
 import '../../core/configs/colors/app_colors.dart';
@@ -67,7 +67,7 @@ class _KYCInfoViewState extends State<KYCInfoView> {
     if (activeStep < totalSteps - 1) {
       setState(() => activeStep++);
     } else {
-      Get.to(const KycSuccessView());
+      _showSuccessDialog(context);
     }
   }
 
@@ -163,6 +163,66 @@ class _KYCInfoViewState extends State<KYCInfoView> {
   }
 
   // ---------------- Step Screens ----------------
+  void _showSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: AppColor.white,
+          insetPadding: EdgeInsets.symmetric(horizontal: 20.w),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20.r),
+          ),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  Assets.imagesSuccessdialog,
+                  width: 170.w,
+                  height: 180.h,
+                  fit: BoxFit.contain,
+                ),
+                20.heightSpace,
+                Text(
+                  "Submitted for Review",
+                  style: FontHelper.f24w500MediumStyle.copyWith(
+                      color: AppColor.black, fontWeight: FontWeight.w600),
+                ),
+                12.heightSpace,
+                Text(
+                  "Your KYC has been submitted for review. It may take up to 12 to 24 hours to verify your identity.",
+                  textAlign: TextAlign.center,
+                  style: FontHelper.f14w400Regular.copyWith(
+                    color: AppColor.tertiary,
+                    height: 1.5,
+                  ),
+                ),
+                30.heightSpace,
+                PrimaryButton(
+                  height: 48.h,
+                  onTap: () {
+                    Get.back();
+                    Get.offAll(() => const SimpleBottomNav());
+                  },
+                  childWidget: Text(
+                    "Ok",
+                    style: FontHelper.f15w600SemiBold
+                        .copyWith(color: AppColor.white),
+                  ),
+                  bgColor: AppColor.primary,
+                  borderRadius: 12.r,
+                  width: double.infinity,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
   Widget _personalDetails() {
     return Column(
@@ -251,7 +311,6 @@ class _KYCInfoViewState extends State<KYCInfoView> {
                   width: 173.w,
                   onTap: () {
                     Get.to(() => const FaceIdView());
-
                   },
                   childWidget: Text(
                     "Start Face ID Verification",

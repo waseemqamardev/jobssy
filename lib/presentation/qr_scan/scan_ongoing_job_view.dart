@@ -20,7 +20,7 @@ class _ScanOngoingJobDetailViewState extends State<ScanOngoingJobDetailView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.background,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Column(
           children: [
@@ -146,7 +146,7 @@ class _ScanOngoingJobDetailViewState extends State<ScanOngoingJobDetailView> {
                                   fontWeight: FontWeight.w700,
                                   color: AppColor.primary),
                             ),
-                            bgColor: AppColor.background,
+                            bgColor: Colors.transparent,
                             borderColor: AppColor.primary,
                             borderRadius: 11.85.r,
                           ),
@@ -171,7 +171,7 @@ class _ScanOngoingJobDetailViewState extends State<ScanOngoingJobDetailView> {
                                   fontWeight: FontWeight.w700,
                                   color: AppColor.primary),
                             ),
-                            bgColor: AppColor.background,
+                            bgColor: Colors.transparent,
                             borderColor: AppColor.primary,
                             borderRadius: 11.85.r,
                           ),
@@ -203,7 +203,7 @@ class _ScanOngoingJobDetailViewState extends State<ScanOngoingJobDetailView> {
           child: Container(
             padding: EdgeInsets.all(20.r),
             decoration: BoxDecoration(
-              color: AppColor.background,
+              color: Colors.transparent,
               borderRadius: BorderRadius.vertical(top: Radius.circular(25.r)),
             ),
             child: Column(

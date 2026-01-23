@@ -26,7 +26,7 @@ class _CustomerViewProfileViewState extends State<CustomerViewProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.background,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Column(
           children: [

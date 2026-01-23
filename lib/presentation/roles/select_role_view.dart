@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jobssy/presentation/authentication/employee_sign_up/signup_view.dart';
-import 'package:jobssy/presentation/customer_auth/customer_signup_view.dart';
 
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/utils/extensions.dart';
 import '../../generated/assets.dart';
+import '../customer_auth/customer_signup_view.dart';
 
 class SelectRoleView extends StatefulWidget {
   const SelectRoleView({super.key});
