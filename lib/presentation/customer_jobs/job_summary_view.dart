@@ -7,6 +7,7 @@ import '../../../core/global_components/primary_button.dart';
 import '../../../core/utils/extensions.dart';
 import '../../../generated/assets.dart';
 import '../customer_bottom_nav/customer_bottomnav.dart';
+import '../wallet/invoice_details_view.dart';
 
 class JobSummaryView extends StatelessWidget {
   const JobSummaryView({super.key});
@@ -159,13 +160,23 @@ class JobSummaryView extends StatelessWidget {
                   height: 180.h,
                   fit: BoxFit.contain,
                 ),
-
               ],
             ),
           ),
         );
       },
     );
+
+    // ⏳ Delay then navigate
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pop(context); // Close dialog
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => InvoiceDetailsView(), // your next screen
+        ),
+      );
+    });
   }
 
   Widget _buildSummaryRow(String title, String value) {

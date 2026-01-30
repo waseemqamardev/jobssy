@@ -189,6 +189,7 @@ class _SimpleBottomNavState extends State<SimpleBottomNav> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: screens[selectedIndex],
       bottomNavigationBar: Container(
         height: 75.h,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jobssy/presentation/home/widgets/location_permission_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
 import '../../core/global_components/customfield_component.dart';
@@ -378,11 +379,15 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  void _showFilterBottomSheet(BuildContext context) {
+  void _showFilterBottomSheet(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    // Get saved currency symbol (default to $ if none)
+    String currencySymbol = prefs.getString("currency_symbol") ?? "\$";
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent, // 🔴 IMPORTANT
+      backgroundColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(25.r)),
       ),
@@ -409,8 +414,6 @@ class _HomeViewState extends State<HomeView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   30.heightSpace,
-
-                  /// Title
                   Text(
                     "Select Filters",
                     style: FontHelper.f16BoldStyle.copyWith(
@@ -418,25 +421,20 @@ class _HomeViewState extends State<HomeView> {
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-
                   Text(
                     "Please select the filters as per your preferences.",
                     style: FontHelper.f13w400Regular
                         .copyWith(color: AppColor.tertiary),
                   ),
-
                   12.heightSpace,
                   Divider(color: AppColor.tertiary.withOpacity(0.5)),
                   12.heightSpace,
 
                   /// Job Type
-                  Text(
-                    "Job Type",
-                    style: FontHelper.f14w400Regular
-                        .copyWith(color: AppColor.black),
-                  ),
+                  Text("Job Type",
+                      style: FontHelper.f14w400Regular
+                          .copyWith(color: AppColor.black)),
                   7.heightSpace,
-
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 15.w),
                     decoration: BoxDecoration(
@@ -450,27 +448,21 @@ class _HomeViewState extends State<HomeView> {
                         value: "All",
                         dropdownColor: AppColor.white,
                         items: ["All", "Barista", "Cleaner", "Cashier"]
-                            .map(
-                              (value) => DropdownMenuItem(
-                            value: value,
-                            child: Text(value),
-                          ),
-                        )
+                            .map((value) => DropdownMenuItem(
+                          value: value,
+                          child: Text(value),
+                        ))
                             .toList(),
                         onChanged: (_) {},
                       ),
                     ),
                   ),
-
                   12.heightSpace,
 
                   /// Distance
-                  Text(
-                    "Distance",
-                    style: FontHelper.f14w400Regular
-                        .copyWith(color: AppColor.black),
-                  ),
-
+                  Text("Distance",
+                      style: FontHelper.f14w400Regular
+                          .copyWith(color: AppColor.black)),
                   Slider(
                     value: 0.4,
                     onChanged: (v) {},
@@ -478,12 +470,9 @@ class _HomeViewState extends State<HomeView> {
                   ),
 
                   /// Pay Range
-                  Text(
-                    "Pay Range",
-                    style: FontHelper.f14w400Regular
-                        .copyWith(color: AppColor.black),
-                  ),
-
+                  Text("Pay Range",
+                      style: FontHelper.f14w400Regular
+                          .copyWith(color: AppColor.black)),
                   RangeSlider(
                     values: const RangeValues(20, 80),
                     min: 0,
@@ -495,10 +484,10 @@ class _HomeViewState extends State<HomeView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("\$5/hr",
+                      Text("${currencySymbol} 5/hr",
                           style: FontHelper.f14w400Regular
                               .copyWith(color: AppColor.black)),
-                      Text("\$100/hr",
+                      Text("${currencySymbol} 100/hr",
                           style: FontHelper.f14w400Regular
                               .copyWith(color: AppColor.black)),
                     ],
@@ -538,7 +527,6 @@ class _HomeViewState extends State<HomeView> {
                       ),
                     ],
                   ),
-
                   20.heightSpace,
                 ],
               ),

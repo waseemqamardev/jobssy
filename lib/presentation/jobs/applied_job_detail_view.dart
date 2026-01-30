@@ -124,9 +124,18 @@ class AppliedJobDetailsView extends StatelessWidget {
       backgroundColor: Colors.transparent,
       builder: (context) {
         return Container(
+
           padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
           decoration: BoxDecoration(
-            color: AppColor.white,
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFFDAF0FF),
+                Color(0xFFEEF9FF),
+                Color(0xFFDFE0E2),
+              ],
+            ),
             borderRadius: BorderRadius.vertical(top: Radius.circular(30.r)),
           ),
           child: Column(

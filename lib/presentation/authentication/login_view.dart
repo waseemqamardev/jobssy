@@ -43,26 +43,19 @@ class _LoginViewState extends State<LoginView> {
                 ),
               ),
               Center(
-                child: Text("Jobssy",
-                    style: FontHelper.extraBoldStyle
-
-                ),
+                child: Text("Jobssy", style: FontHelper.extraBoldStyle),
               ),
 
               15.heightSpace,
-              Text(
-                "Log In",
-                  style: FontHelper.extraBoldStyle.copyWith(
-                    fontSize: 24.sp,
-                    color: AppColor.darkBlueText
-                  )
-
-              ),
+              Text("Log In",
+                  style: FontHelper.extraBoldStyle
+                      .copyWith(fontSize: 24.sp, color: AppColor.darkBlueText)),
               6.heightSpace,
               Text(
                 "Enter your email and password to log in",
                 style: FontHelper.f14w500MediumStyle.copyWith(
-                    color: AppColor.reLightGrey.withOpacity(0.40), fontWeight: FontWeight.w400),
+                    color: AppColor.reLightGrey.withOpacity(0.40),
+                    fontWeight: FontWeight.w400),
               ),
 
               24.heightSpace,
@@ -72,7 +65,6 @@ class _LoginViewState extends State<LoginView> {
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 enabled: true,
-
               ),
 
               20.heightSpace,
@@ -84,7 +76,6 @@ class _LoginViewState extends State<LoginView> {
                 controller: passwordController,
                 obscureText: obscurePassword,
                 enabled: true,
-
                 suffixIconWidget: obscurePassword
                     ? Image.asset(
                         Assets.iconsEyeOff,
@@ -110,7 +101,7 @@ class _LoginViewState extends State<LoginView> {
               Align(
                 alignment: Alignment.centerRight,
                 child: GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Get.to(() => const ForgotPasswordView());
                   },
                   child: Text(
@@ -118,7 +109,6 @@ class _LoginViewState extends State<LoginView> {
                     style: FontHelper.f13w500MediumStyle.copyWith(
                       color: AppColor.btnBlue,
                       fontWeight: FontWeight.w700,
-
                     ),
                   ),
                 ),
@@ -128,7 +118,9 @@ class _LoginViewState extends State<LoginView> {
 
               PrimaryButton(
                 height: 48.h,
-                onTap: () {},
+                onTap: () {
+                  Get.to(const SelectRoleView());
+                },
                 childWidget: Text(
                   "Login",
                   style: FontHelper.f14w500MediumStyle.copyWith(
@@ -144,13 +136,19 @@ class _LoginViewState extends State<LoginView> {
               // OR Divider
               Row(
                 children: [
-                  Expanded(child: Divider(color: Color(0xff1D07431A).withOpacity(0.10))),
+                  Expanded(
+                      child: Divider(
+                          color: const Color(0xff1D07431A).withOpacity(0.10))),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 10.w),
                     child: Text("Or",
-                        style: TextStyle(color: Color(0xff1D0743).withOpacity(0.60), fontSize: 14.sp)),
+                        style: TextStyle(
+                            color: const Color(0xff1D0743).withOpacity(0.60),
+                            fontSize: 14.sp)),
                   ),
-                  Expanded(child: Divider(color: Color(0xff1D07431A).withOpacity(0.10))),
+                  Expanded(
+                      child: Divider(
+                          color: const Color(0xff1D07431A).withOpacity(0.10))),
                 ],
               ),
 
@@ -180,8 +178,7 @@ class _LoginViewState extends State<LoginView> {
                   child: RichText(
                     text: TextSpan(
                       text: "Don't have an account? ",
-                      style: FontHelper.f12w500MediumStyle
-                          .copyWith(
+                      style: FontHelper.f12w500MediumStyle.copyWith(
                         color: AppColor.darkBlueText.withOpacity(0.60),
                       ),
                       children: [
@@ -216,7 +213,7 @@ class _LoginViewState extends State<LoginView> {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: Color(0xff166DDF1A).withOpacity(0.10)),
+          border: Border.all(color: const Color(0xff166DDF1A).withOpacity(0.10)),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -225,8 +222,8 @@ class _LoginViewState extends State<LoginView> {
             12.widthSpace,
             Text(
               label,
-              style: FontHelper.f14w500MediumStyle
-                  .copyWith(fontWeight: FontWeight.w600, color: AppColor.darkBlueText),
+              style: FontHelper.f14w500MediumStyle.copyWith(
+                  fontWeight: FontWeight.w600, color: AppColor.darkBlueText),
             ),
           ],
         ),

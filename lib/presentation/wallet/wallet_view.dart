@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jobssy/presentation/notifications/notifications_view.dart';
 import 'package:jobssy/presentation/wallet/invoice_details_view.dart';
 import '../../core/configs/colors/app_colors.dart';
 import '../../core/configs/font_style.dart';
@@ -219,17 +220,22 @@ class WalletView extends StatelessWidget {
   }
 
   Widget _buildNotificationIcon() {
-    return Container(
-      height: 48.h,
-      width: 48.w,
-      decoration: BoxDecoration(
-        color: AppColor.white,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: AppColor.border),
+    return GestureDetector(
+      onTap: (){
+        Get.to(NotificationsView());
+      },
+      child: Container(
+        height: 48.h,
+        width: 48.w,
+        decoration: BoxDecoration(
+          color: AppColor.white,
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: AppColor.border),
+        ),
+        child: Center(
+            child: Image.asset(Assets.iconsNotificationnew,
+                height: 22.h, width: 22.w)),
       ),
-      child: Center(
-          child: Image.asset(Assets.iconsNotificationnew,
-              height: 22.h, width: 22.w)),
     );
   }
 }

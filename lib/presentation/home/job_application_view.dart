@@ -22,7 +22,7 @@ class _JobApplicationViewState extends State<JobApplicationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Column(
           children: [

@@ -37,7 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.8
   get: ^4.7.3
   flutter_screenutil: ^5.9.3
-  country_picker: ^2.0.27
   flutter_svg: ^2.2.3
   google_fonts: ^6.3.3
   loader_overlay: ^5.0.0
@@ -54,6 +53,9 @@ dependencies:
   mobile_scanner: ^7.1.4
   camera: ^0.10.5+9
   permission_handler: ^11.3.0
+  country_picker: ^2.0.26
+  currency_picker: ^2.0.21
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

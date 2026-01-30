@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:country_picker/country_picker.dart';
 
 import '../../../core/global_components/primary_button.dart';
 import '../../core/configs/colors/app_colors.dart';
@@ -24,11 +26,36 @@ class _EmployeeProfileSetupViewState extends State<EmployeeProfileSetupView> {
   final TextEditingController dobController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
 
-  // Separate variables for Gender and Nationality
   String selectedGender = "Male";
   String selectedNationality = "Iraq";
+  String selectedCurrencySymbol = "";
   XFile? selectedImage;
 
+  /// Map ISO country codes → currency symbols
+  final Map<String, String> _currencyMap = {
+    "US": "\$", // United States Dollar
+    "PK": "₨", // Pakistani Rupee
+    "IQ": "د.ع", // Iraqi Dinar
+    "IN": "₹", // Indian Rupee
+    "GB": "£", // British Pound
+    "EU": "€", // Euro
+    "AE": "د.إ", // UAE Dirham
+    "JP": "¥", // Japanese Yen
+    "CN": "¥", // Chinese Yuan
+    "CA": "\$", // Canadian Dollar
+    "AU": "\$", // Australian Dollar
+    "AF": "؋", // Afghan Afghani
+    "BD": "৳", // Bangladesh Taka
+    "BH": ".د.ب", // Bahraini Dinar
+    "DZ": "د.ج", // Algerian Dinar
+    "EG": "£", // Egyptian Pound
+    "NG": "₦", // Nigerian Naira
+    "SA": "﷼", // Saudi Riyal
+    "SG": "\$", // Singapore Dollar
+    // You can add more if needed
+  };
+
+  /// Show permission dialog for selecting photo
   void _showPermissionDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -98,6 +125,7 @@ class _EmployeeProfileSetupViewState extends State<EmployeeProfileSetupView> {
     );
   }
 
+  /// Pick image from gallery
   Future<void> _pickImage() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
@@ -106,6 +134,33 @@ class _EmployeeProfileSetupViewState extends State<EmployeeProfileSetupView> {
         selectedImage = image;
       });
     }
+  }
+
+  /// Open country picker
+  void _openCountryPicker() {
+    showCountryPicker(
+      context: context,
+      showPhoneCode: false,
+      onSelect: (Country country) async {
+        final prefs = await SharedPreferences.getInstance();
+
+        // Get currency symbol from map
+        String symbol = _currencyMap[country.countryCode] ?? "\$";
+
+        setState(() {
+          selectedNationality = country.name;
+          selectedCurrencySymbol = symbol;
+        });
+
+        // Save locally
+        await prefs.setString("nationality", country.name);
+        await prefs.setString("currency_symbol", symbol);
+
+        // Debug log
+        debugPrint("✅ COUNTRY SAVED: ${country.name}");
+        debugPrint("💱 SYMBOL SAVED: $symbol");
+      },
+    );
   }
 
   @override
@@ -239,14 +294,35 @@ class _EmployeeProfileSetupViewState extends State<EmployeeProfileSetupView> {
                 ),
               ),
               3.heightSpace,
-              _buildDropdown(
-                value: selectedNationality,
-                items: ["Iraq", "Pakistan", "USA", "UK"],
-                onChanged: (val) {
-                  setState(() {
-                    selectedNationality = val!;
-                  });
-                },
+              GestureDetector(
+                onTap: _openCountryPicker,
+                child: Container(
+                  height: 44.h,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.symmetric(horizontal: 14.w),
+                  decoration: BoxDecoration(
+                    color: AppColor.white,
+                    borderRadius: BorderRadius.circular(12.r),
+                    border: Border.all(
+                      color: const Color(0xff166DDF1A).withOpacity(0.10),
+                      width: 1.w,
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        selectedNationality,
+                        style: FontHelper.f16w500MediumStyle
+                            .copyWith(color: AppColor.darkBlueText),
+                      ),
+                      Icon(
+                        Icons.keyboard_arrow_down,
+                        color: AppColor.reLightGrey.withOpacity(0.5),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               16.heightSpace,
 
@@ -281,7 +357,7 @@ class _EmployeeProfileSetupViewState extends State<EmployeeProfileSetupView> {
     );
   }
 
-  // Reusable Dropdown
+  // Reusable dropdown for gender
   Widget _buildDropdown({
     required String value,
     required List<String> items,
@@ -307,16 +383,7 @@ class _EmployeeProfileSetupViewState extends State<EmployeeProfileSetupView> {
             Icons.keyboard_arrow_down,
             color: AppColor.reLightGrey.withOpacity(0.5),
           ),
-          items: items.map((e) {
-            return DropdownMenuItem<String>(
-              value: e,
-              child: Text(
-                e,
-                style: FontHelper.f16w500MediumStyle
-                    .copyWith(color: AppColor.darkBlueText),
-              ),
-            );
-          }).toList(),
+          items: items.map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
           onChanged: onChanged,
         ),
       ),

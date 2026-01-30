@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jobssy/generated/assets.dart';
+import 'package:jobssy/presentation/customer_bottom_nav/customer_bottomnav.dart';
 import '../../../core/configs/colors/app_colors.dart';
 import '../../../core/configs/font_style.dart';
 import '../../../core/global_components/primary_button.dart';
@@ -25,7 +26,9 @@ class ScanQrEmployeeFeedbackView extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: _buildCircleButton(
-                        Icons.arrow_back_ios_new, () => Get.back()),
+                        Icons.arrow_back_ios_new, () =>
+
+                        Get.to(CustomerBottomNav())),
                   ),
                   Text(
                     "Employee Feedback",

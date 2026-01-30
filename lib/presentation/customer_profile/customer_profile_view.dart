@@ -100,9 +100,9 @@ class _CustomerProfileViewState extends State<CustomerProfileView> {
               _buildSectionHeader("Support"),
               15.heightSpace,
               _buildSettingsContainer([
-                _buildListTile(Assets.iconsKycnew, "KYC Status",
-                    trailing: _buildStatusBadge("Verified"), onTap: () {}),
-                const Divider(color: AppColor.border, height: 1, indent: 50),
+                // _buildListTile(Assets.iconsKycnew, "KYC Status",
+                //     trailing: _buildStatusBadge("Verified"), onTap: () {}),
+                // const Divider(color: AppColor.border, height: 1, indent: 50),
                 _buildListTile(Assets.iconsPasswordchangenew, "Change Password",
                     onTap: () {
                       Get.to(ChangePasswordView());

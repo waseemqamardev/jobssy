@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jobssy/presentation/customer_home/customer_home_view.dart';
 import 'package:jobssy/presentation/customer_jobs/customer_jobs_view.dart';
+import 'package:jobssy/presentation/customer_profile/customer_profile_view.dart';
 import 'package:jobssy/presentation/profile/profile_view.dart';
 import 'package:jobssy/presentation/qr_scan/scan_qrcode_view.dart';
 import '../../core/configs/colors/app_colors.dart';
@@ -25,12 +26,13 @@ class _CustomerBottomNavState extends State<CustomerBottomNav> {
     const CustomerJobsView(),
     const ScanQRCodeView(),
     const CustomerWalletView(),
-    const ProfileView(),
+    const CustomerProfileView(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       extendBody: true,
       body: screens[selectedIndex],
 
